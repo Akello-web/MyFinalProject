@@ -4,6 +4,9 @@
     <div layout:fragment="content">
         <div class="row">
             <div class="col-6 mx-auto">
+
+                <h2 class="text-center">Register</h2>
+
                 <div class="alert alert-danger alert-dismissible fade show" role="alert"
                      th:if="${param.passwordMismatch!=null}">
                     Password mismatch
@@ -20,8 +23,13 @@
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
                 <div class="alert alert-success alert-dismissible fade show" role="alert"
-                     th:if="${param.success!=null}">
-                    Signed up as a user successfully!
+                     th:if="${param.successSeller!=null}">
+                    Signed up as a SELLER successfully!
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+                <div class="alert alert-success alert-dismissible fade show" role="alert"
+                     th:if="${param.successUser!=null}">
+                    Signed up as a USER successfully!
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
 
@@ -85,31 +93,22 @@
                                    placeholder="Repeat Password" required>
                         </div>
                     </div>
-                    <button type="button" class="btn btn-success mt-2" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-                        SIGN UP
-                    </button>
+                    <button class="btn btn-success mt-2">SIGN UP</button>
 
-                    <!-- Modal -->
-                    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h1 class="modal-title fs-5" id="staticBackdropLabel">CONSUMER/SELLER</h1>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                </div>
-                                <div class="modal-body">
-                                    CHOOSE OPTION YOU WANT TO SIGN UP
-                                </div>
-                                <div class="modal-footer">
-                                    <button class="btn btn-success">AS A CONSUMER</button>
-                                    <button type="button" class="btn btn-primary">AS A SELLER</button>
-                                </div>
-                            </div>
+                    <div class="input-group mt-2">
+                        <div class="input-group-text">
+                            <input class="form-check-input mt-0" type="checkbox"
+                                   value="checked" name="sellerChecked"
+                                   aria-label="Checkbox for following text input">
                         </div>
+                        <input type="text" class="form-control"
+                               th:value="'I want to sign up as a SELLER'" readonly
+                               aria-label="Text input with checkbox">
                     </div>
 
                 </form>
             </div>
         </div>
     </div>
+
 </html>

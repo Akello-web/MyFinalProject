@@ -40,6 +40,7 @@ public class UserService implements UserDetailsService {
     }
 
     public User addUser(User user){
+
         User checkUser = userRepository.findByEmail(user.getEmail());
         if(checkUser==null){
             user.setPassword(passwordEncoder.encode(user.getPassword()));
@@ -48,6 +49,23 @@ public class UserService implements UserDetailsService {
             if (defaultPermission == null) {
                 defaultPermission = new Permission();
                 defaultPermission.setRole("ROLE_USER");
+                defaultPermission = permissionRepository.save(defaultPermission);
+            }
+            user.setPermissionList(Collections.singletonList(defaultPermission));
+            return userRepository.save(user);
+        }
+        return null;
+    }
+
+    public User addSeller(User user){
+        User checkSeller = userRepository.findByEmail(user.getEmail());
+        if(checkSeller==null){
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
+            Permission defaultPermission = permissionRepository.findByRole("ROLE_SELLER");
+
+            if (defaultPermission == null) {
+                defaultPermission = new Permission();
+                defaultPermission.setRole("ROLE_SELLER");
                 defaultPermission = permissionRepository.save(defaultPermission);
             }
             user.setPermissionList(Collections.singletonList(defaultPermission));

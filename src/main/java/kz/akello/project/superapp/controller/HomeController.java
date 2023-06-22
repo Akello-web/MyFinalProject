@@ -5,6 +5,7 @@ import kz.akello.project.superapp.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -31,11 +32,14 @@ public class HomeController {
     }
 
     @PostMapping(value = "/to-sign-up")
-    public String toSignUp(@RequestParam("user_full_name") String fullName,
-                           @RequestParam("user_age") int userAge,
-                           @RequestParam("user_email") String email,
-                           @RequestParam("user_password") String password,
-                           @RequestParam("user_repeat_password") String rePassword){
+    public String toSignUp(Model model,
+                           @RequestParam(name = "user_full_name") String fullName,
+                           @RequestParam(name = "user_age") int userAge,
+                           @RequestParam(name = "user_email") String email,
+                           @RequestParam(name = "user_password") String password,
+                           @RequestParam(name = "user_repeat_password") String rePassword,
+                           @RequestParam(name = "sellerChecked", required = false) String checkBox){
+
         if(userAge >= 16){
             if(password.equals(rePassword)){
                 User user = new User();
@@ -45,11 +49,20 @@ public class HomeController {
                 user.setEmail(email);
                 user.setPassword(password);
 
-                User newUser = userService.addUser(user);
-                if(newUser!=null){
-                    return "redirect:/sign-up-page?success";
+                if(checkBox!=null){
+                    User newUser = userService.addSeller(user);
+                    if(newUser!=null){
+                        return "redirect:/sign-up-page?successSeller";
+                    }else {
+                        return "redirect:/sign-up-page?emailError";
+                    }
                 }else {
-                    return "redirect:/sign-up-page?emailError";
+                    User newUser = userService.addUser(user);
+                    if(newUser!=null){
+                        return "redirect:/sign-up-page?successUser";
+                    }else {
+                        return "redirect:/sign-up-page?emailError";
+                    }
                 }
 
             }else {

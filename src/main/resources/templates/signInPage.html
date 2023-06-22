@@ -4,6 +4,15 @@
 <div layout:fragment="content">
   <div class="row">
     <div class="col-6 mx-auto">
+
+      <h2 class="text-center">Sign In</h2>
+
+      <div class="alert alert-danger alert-dismissible fade show" role="alert"
+           th:if="${param.authenticationError!=null}">
+        Incorrect email or password!
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+
       <form method="post" th:action="@{'/sign-in'}">
         <div class="row mt-4">
           <div class="col-12">
