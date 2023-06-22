@@ -40,37 +40,39 @@ public class HomeController {
                            @RequestParam(name = "user_repeat_password") String rePassword,
                            @RequestParam(name = "sellerChecked", required = false) String checkBox){
 
-        if(userAge >= 16){
             if(password.equals(rePassword)){
                 User user = new User();
-
                 user.setAge(userAge);
                 user.setFullName(fullName);
                 user.setEmail(email);
                 user.setPassword(password);
-
                 if(checkBox!=null){
-                    User newUser = userService.addSeller(user);
-                    if(newUser!=null){
-                        return "redirect:/sign-up-page?successSeller";
+                    if(userAge >= 21){
+                        User newUser = userService.addSeller(user);
+                        if(newUser!=null){
+                            return "redirect:/sign-up-page?successSeller";
+                        }else {
+                            return "redirect:/sign-up-page?emailError";
+                        }
                     }else {
-                        return "redirect:/sign-up-page?emailError";
+                        return "redirect:/sign-up-page?sellerAgeError";
                     }
+
                 }else {
-                    User newUser = userService.addUser(user);
-                    if(newUser!=null){
-                        return "redirect:/sign-up-page?successUser";
+                    if(userAge>=16){
+                        User newUser = userService.addUser(user);
+                        if(newUser!=null){
+                            return "redirect:/sign-up-page?successUser";
+                        }else {
+                            return "redirect:/sign-up-page?emailError";
+                        }
                     }else {
-                        return "redirect:/sign-up-page?emailError";
+                        return "redirect:/sign-up-page?userAgeError";
                     }
                 }
-
             }else {
                 return "redirect:/sign-up-page?passwordMismatch";
             }
-        }else {
-            return "redirect:/sign-up-page?tooYoung";
-        }
     }
 
     @PreAuthorize("isAuthenticated()")

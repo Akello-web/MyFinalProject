@@ -7,31 +7,7 @@
 
                 <h2 class="text-center">Register</h2>
 
-                <div class="alert alert-danger alert-dismissible fade show" role="alert"
-                     th:if="${param.passwordMismatch!=null}">
-                    Password mismatch
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-                <div class="alert alert-danger alert-dismissible fade show" role="alert"
-                     th:if="${param.emailError!=null}">
-                    Email is busy
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-                <div class="alert alert-danger alert-dismissible fade show" role="alert"
-                     th:if="${param.tooYoung!=null}">
-                    Only 16+ is allowed
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-                <div class="alert alert-success alert-dismissible fade show" role="alert"
-                     th:if="${param.successSeller!=null}">
-                    Signed up as a SELLER successfully!
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-                <div class="alert alert-success alert-dismissible fade show" role="alert"
-                     th:if="${param.successUser!=null}">
-                    Signed up as a USER successfully!
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
+                <div th:insert="signUpAlerts.html"></div>
 
                 <form method="post" th:action="@{'/to-sign-up'}">
                     <div class="row mt-4">
