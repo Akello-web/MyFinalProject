@@ -1,6 +1,8 @@
 package kz.akello.project.superapp.service;
 
+import kz.akello.project.superapp.model.Permission;
 import kz.akello.project.superapp.model.User;
+import kz.akello.project.superapp.repository.PermissionRepository;
 import kz.akello.project.superapp.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -8,12 +10,16 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import java.util.Collections;
 import java.util.List;
 
 
 public class UserService implements UserDetailsService {
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private PermissionRepository permissionRepository;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -37,6 +43,14 @@ public class UserService implements UserDetailsService {
         User checkUser = userRepository.findByEmail(user.getEmail());
         if(checkUser==null){
             user.setPassword(passwordEncoder.encode(user.getPassword()));
+            Permission defaultPermission = permissionRepository.findByRole("ROLE_USER");
+
+            if (defaultPermission == null) {
+                defaultPermission = new Permission();
+                defaultPermission.setRole("ROLE_USER");
+                defaultPermission = permissionRepository.save(defaultPermission);
+            }
+            user.setPermissionList(Collections.singletonList(defaultPermission));
             return userRepository.save(user);
         }
         return null;

@@ -1,46 +1,46 @@
 <div xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
   <nav class="navbar navbar-expand-lg bg-dark navbar-dark">
     <div class="container-fluid">
-      <a class="navbar-brand" href="#">Navbar</a>
+      <a class="navbar-brand" href="/">AQYL</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <li class="nav-item">
-            <a class="nav-link" href="#">Home</a>
-          </li>
-                <li class="nav-item" sec:authorize="isAnonymous()">
-                  <a class="nav-link" th:href="@{'/sign-in-page'}">Sign in</a>
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link" href="/">Main Page</a>
+            </li>
+            <li class="nav-item" sec:authorize="isAnonymous()">
+              <a class="nav-link" th:href="@{'/sign-in-page'}">Sign in</a>
+            </li>
+
+            <li class="nav-item" sec:authorize="isAnonymous()">
+              <a class="nav-link" th:href="@{'/sign-up-page'}">Sign up</a>
+            </li>
+
+<!--            <li class="nav-item" sec:authorize="hasAnyRole('ROLE_ADMIN')">-->
+<!--              <a class="nav-link" th:href="@{'/admin-panel'}">Admin Panel</a>-->
+<!--            </li>-->
+<!--            <li class="nav-item" sec:authorize="hasAnyRole('ROLE_SELLER')">-->
+<!--              <a class="nav-link" th:href="@{'/teacher-panel'}">Teacher Panel</a>-->
+<!--            </li>-->
+
+            <li class="nav-item dropdown" sec:authorize="isAuthenticated()">
+              <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <span th:text="${#authentication.principal.fullName}"></span>
+              </a>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="/profile">Profile</a></li>
+                <li><a class="dropdown-item" href="#">Settings</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li>
+                  <form th:action="@{'/sign-out'}" method="post">
+                    <button class="dropdown-item">Sign out</button>
+                  </form>
                 </li>
-
-                    <li class="nav-item" sec:authorize="isAnonymous()">
-                      <a class="nav-link" th:href="@{'/sign-up-page'}">Sign up</a>
-                    </li>
-
-<!--                    <li class="nav-item" sec:authorize="hasAnyRole('ROLE_ADMIN')">-->
-<!--                      <a class="nav-link" th:href="@{'/admin-panel'}">Admin Panel</a>-->
-<!--                    </li>-->
-<!--                    <li class="nav-item" sec:authorize="hasAnyRole('ROLE_SELLER')">-->
-<!--                      <a class="nav-link" th:href="@{'/teacher-panel'}">Teacher Panel</a>-->
-<!--                    </li>-->
-
-                    <li class="nav-item dropdown" sec:authorize="isAuthenticated()">
-                      <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        <span th:text="${#authentication.principal.fullName}"></span>
-                      </a>
-                      <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#">Settings</a></li>
-<!--                        <li><a class="dropdown-item" th:href="@{'/update-password-page'}">Update Password</a></li>-->
-                        <li><hr class="dropdown-divider"></li>
-                        <li>
-                          <form th:action="@{'/sign-out'}" method="post">
-                            <button class="dropdown-item">Sign out</button>
-                          </form>
-                        </li>
-                      </ul>
-                    </li>
-        </ul>
+              </ul>
+            </li>
+          </ul>
         <form class="d-flex" role="search">
           <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
           <button class="btn btn-outline-light" type="submit">Search</button>

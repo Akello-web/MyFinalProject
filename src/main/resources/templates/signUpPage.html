@@ -21,7 +21,7 @@
                 </div>
                 <div class="alert alert-success alert-dismissible fade show" role="alert"
                      th:if="${param.success!=null}">
-                    Signed up successfully!
+                    Signed up as a user successfully!
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
 
@@ -85,8 +85,29 @@
                                    placeholder="Repeat Password" required>
                         </div>
                     </div>
+                    <button type="button" class="btn btn-success mt-2" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                        SIGN UP
+                    </button>
 
-                    <button class="btn btn-success mt-2">SIGN UP</button>
+                    <!-- Modal -->
+                    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="staticBackdropLabel">CONSUMER/SELLER</h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    CHOOSE OPTION YOU WANT TO SIGN UP
+                                </div>
+                                <div class="modal-footer">
+                                    <button class="btn btn-success">AS A CONSUMER</button>
+                                    <button type="button" class="btn btn-primary">AS A SELLER</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                 </form>
             </div>
         </div>
