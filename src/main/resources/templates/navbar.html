@@ -31,8 +31,8 @@
                 <span th:text="${#authentication.principal.fullName}"></span>
               </a>
               <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="/profile">Profile</a></li>
-                <li><a class="dropdown-item" href="#">Settings</a></li>
+                <li><a class="dropdown-item" th:href="@{'/profile'}">Profile</a></li>
+                <li><a class="dropdown-item" th:href="@{'/settings-page'}">Settings</a></li>
                 <li><hr class="dropdown-divider"></li>
                 <li>
                   <form th:action="@{'/sign-out'}" method="post">

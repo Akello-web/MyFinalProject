@@ -81,5 +81,27 @@ public class HomeController {
         return "profile";
     }
 
+    @PreAuthorize("isAuthenticated()")
+    @GetMapping(value = "/settings-page")
+    public String settingsPage(){
+        return "settingsPage";
+    }
+
+    @PostMapping(value = "/to-update-password")
+    public String updatePassword(@RequestParam("user_old_password") String oldPassword,
+                                 @RequestParam("user_new_password") String newPassword,
+                                 @RequestParam("user_repeat_new_password") String rePassword){
+        if(newPassword.equals(rePassword)) {
+            User user = userService.updatePassword(newPassword, oldPassword);
+            if(user!=null){
+                return "redirect:/settings-page?success";
+            }else {
+                return "redirect:/settings-page?oldPasswordError";
+            }
+        }else {
+            return "redirect:/settings-page?passwordMismatch";
+        }
+    }
+
 
 }
