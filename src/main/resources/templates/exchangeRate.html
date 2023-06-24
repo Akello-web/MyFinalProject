@@ -4,7 +4,7 @@
 <div layout:fragment="content">
         <div class="row">
                 <div class="col-9 mx-auto">
-                        <h1 class="text-center">Exchange Rate:</h1>
+                        <h1 class="text-center">USD Exchange Rates List:</h1>
                         <table class="table table-striped">
                                 <thead>
                                 <tr>
@@ -12,11 +12,37 @@
                                         <th>VALUE</th>
                                 </tr>
                                 </thead>
-                                <tbody>
+                                <tbody id="currencyListBody">
 
                                 </tbody>
                         </table>
                 </div>
         </div>
+
+        <script type="text/javascript">
+                loadCourses();
+                function loadCourses(){
+                        const httpRequest = new XMLHttpRequest();
+                        httpRequest.open("GET", "/exchange-rate", true);
+                        httpRequest.onreadystatechange = function (){
+                                if(httpRequest.readyState === XMLHttpRequest.DONE && httpRequest.status === 200){
+                                        let currencyList = JSON.parse(httpRequest.responseText);
+
+                                        let tableContent = "";
+                                        for (var key in currencyList) {
+                                                if (currencyList.hasOwnProperty(key)) {
+                                                        tableContent+="<tr>";
+                                                        tableContent+="<td>"+key+"</td>";
+                                                        tableContent+="<td>"+currencyList[key]+"</td>";
+                                                        tableContent+="</tr>";
+                                                }
+                                        }
+                                        document.getElementById("currencyListBody").innerHTML = tableContent;
+                                }
+                        }
+                        httpRequest.send();
+                }
+        </script>
+
 </div>
 </html>
