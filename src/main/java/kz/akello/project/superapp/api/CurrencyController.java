@@ -51,6 +51,6 @@ public class CurrencyController {
 
 
         // Return the name of the HTML template file (without the extension)
-        return exchangeRates.getConversion_rates().toString();
+        return "<h1>"+exchangeRates.getConversion_rates().get("KZT").toString()+"</h1>";
     }
 }
