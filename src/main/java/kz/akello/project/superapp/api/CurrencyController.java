@@ -45,7 +45,7 @@ public class CurrencyController {
 
         ObjectMapper objectMapper = new ObjectMapper();
         ExchangeRates exchangeRates = objectMapper.readValue(responseBody, ExchangeRates.class);
-        System.out.println(exchangeRates.getConversion_rates().size());
+        System.out.println(exchangeRates.getConversion_rates().get("KZT"));
 
 //        currencyMapper.mapJsonToJavaObject(jsonObject, exchangeRates);
 
