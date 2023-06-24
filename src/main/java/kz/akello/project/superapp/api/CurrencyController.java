@@ -3,7 +3,6 @@ package kz.akello.project.superapp.api;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import kz.akello.project.superapp.json.ExchangeRates;
-import kz.akello.project.superapp.maper.CurrencyMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.*;
 import org.springframework.ui.Model;
@@ -16,9 +15,8 @@ import org.springframework.web.client.RestTemplate;
 @RequiredArgsConstructor
 public class CurrencyController {
 
-    private final CurrencyMapper currencyMapper;
     @GetMapping("/exchange-rate")
-    public String getExchangeRate(Model model) throws JsonProcessingException {
+    public ResponseEntity<String> getExchangeRate(Model model) throws JsonProcessingException {
         // Create a RestTemplate instance
         RestTemplate restTemplate = new RestTemplate();
 
@@ -39,18 +37,24 @@ public class CurrencyController {
         String responseBody = response.getBody();
 
         // Add the response body as a model attribute
-//        model.addAttribute("exchangeRateDetails", responseBody);
 
-//        JSONPObject jsonObject = new JSONPObject(responseBody, exchangeRates);
 
         ObjectMapper objectMapper = new ObjectMapper();
         ExchangeRates exchangeRates = objectMapper.readValue(responseBody, ExchangeRates.class);
-        System.out.println(exchangeRates.getConversion_rates().get("KZT"));
 
-//        currencyMapper.mapJsonToJavaObject(jsonObject, exchangeRates);
+//        System.out.println(exchangeRates.getConversion_rates().get("KZT"));
 
+// Convert the ExchangeRates object back to JSON string
+        String jsonResponse = objectMapper.writeValueAsString(exchangeRates.getConversion_rates());
+
+        // Set the content type of the response to JSON
+        HttpHeaders responseHeaders = new HttpHeaders();
+        responseHeaders.setContentType(MediaType.APPLICATION_JSON);
+
+        // Return the JSON response with appropriate headers
+        return ResponseEntity.ok().headers(responseHeaders).body(jsonResponse);
 
         // Return the name of the HTML template file (without the extension)
-        return "<h1>"+exchangeRates.getConversion_rates().get("KZT").toString()+"</h1>";
+//        return exchangeRates.getConversion_rates().toString();
     }
 }

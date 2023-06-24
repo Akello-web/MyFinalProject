@@ -17,7 +17,7 @@ public class HomeController {
     private final UserService userService;
 
     @GetMapping(value = "/")
-    public String indexPage(){
+    public String indexPage(Model model) {
         return "index";
     }
 
@@ -101,6 +101,11 @@ public class HomeController {
         }else {
             return "redirect:/settings-page?passwordMismatch";
         }
+    }
+
+    @GetMapping(value = "/currency-all")
+    public String getAllCurrency(){
+        return "exchangeRate";
     }
 
 

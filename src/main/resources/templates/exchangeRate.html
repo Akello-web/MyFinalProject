@@ -2,7 +2,21 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="layoutPage.html">
 <div layout:fragment="content">
-        <h1>Exchange Rate</h1>
-        <textarea th:text="${exchangeRateDetails}"></textarea>
+        <div class="row">
+                <div class="col-9 mx-auto">
+                        <h1 class="text-center">Exchange Rate:</h1>
+                        <table class="table table-striped">
+                                <thead>
+                                <tr>
+                                        <th>NAME</th>
+                                        <th>VALUE</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+
+                                </tbody>
+                        </table>
+                </div>
+        </div>
 </div>
 </html>
