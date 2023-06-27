@@ -10,6 +10,7 @@
                 <div th:insert="signUpAlerts.html"></div>
 
                 <form method="post" th:action="@{'/to-sign-up'}">
+                    <input type="hidden" name="user_money" th:value="'100'">
                     <div class="row mt-4">
                         <div class="col-12">
                             <label>FULL NAME:</label>

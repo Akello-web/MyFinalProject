@@ -27,6 +27,9 @@ public class User extends BaseModel implements UserDetails {
     @Column(name = "user_age")
     private int age;
 
+    @Column(name = "user_money")
+    private double money;
+
     @ManyToMany(fetch = FetchType.EAGER)
     private List<Permission> permissionList;
 

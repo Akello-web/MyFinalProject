@@ -39,6 +39,7 @@ public class HomeController {
                            @RequestParam(name = "user_email") String email,
                            @RequestParam(name = "user_password") String password,
                            @RequestParam(name = "user_repeat_password") String rePassword,
+                           @RequestParam(name = "user_money") Double money,
                            @RequestParam(name = "sellerChecked", required = false) String checkBox){
 
             if(password.equals(rePassword)){
@@ -46,9 +47,11 @@ public class HomeController {
                 user.setAge(userAge);
                 user.setFullName(fullName);
                 user.setEmail(email);
+                user.setMoney(money);
                 user.setPassword(password);
                 if(checkBox!=null){
                     if(userAge >= 21){
+                        user.setMoney(150);
                         User newUser = userService.addSeller(user);
                         if(newUser!=null){
                             return "redirect:/sign-up-page?successSeller";
@@ -113,6 +116,7 @@ public class HomeController {
     @PreAuthorize("isAuthenticated()")
     @GetMapping(value = "/bank-account-page")
     public String myBankPage(){
+
         return "bankAccountPage";
     }
 
