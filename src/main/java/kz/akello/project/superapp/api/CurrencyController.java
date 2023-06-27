@@ -36,15 +36,11 @@ public class CurrencyController {
         // Get the response body
         String responseBody = response.getBody();
 
-        // Add the response body as a model attribute
-
-
         ObjectMapper objectMapper = new ObjectMapper();
         ExchangeRates exchangeRates = objectMapper.readValue(responseBody, ExchangeRates.class);
-        System.out.println(exchangeRates.getConversion_rates().getClass().getName());
-//        System.out.println(exchangeRates.getConversion_rates().get("KZT"));
 
-// Convert the ExchangeRates object back to JSON string
+
+        // Convert the ExchangeRates object back to JSON string
         String jsonResponse = objectMapper.writeValueAsString(exchangeRates.getConversion_rates());
 
         // Set the content type of the response to JSON
@@ -54,7 +50,5 @@ public class CurrencyController {
         // Return the JSON response with appropriate headers
         return ResponseEntity.ok().headers(responseHeaders).body(jsonResponse);
 
-        // Return the name of the HTML template file (without the extension)
-//        return exchangeRates.getConversion_rates().toString();
     }
 }

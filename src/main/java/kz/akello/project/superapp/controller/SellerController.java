@@ -11,4 +11,5 @@ public class SellerController {
     public String sellerPage(){
         return "sellerPage";
     }
+
 }

@@ -1,6 +1,8 @@
 package kz.akello.project.superapp.controller;
 
+import kz.akello.project.superapp.model.Product;
 import kz.akello.project.superapp.model.User;
+import kz.akello.project.superapp.service.ProductService;
 import kz.akello.project.superapp.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -15,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class HomeController {
 
     private final UserService userService;
-
     @GetMapping(value = "/")
     public String indexPage(Model model) {
         return "index";
@@ -103,10 +104,16 @@ public class HomeController {
         }
     }
 
+    @PreAuthorize("isAuthenticated()")
     @GetMapping(value = "/currency-all")
     public String getAllCurrency(){
         return "exchangeRate";
     }
 
+    @PreAuthorize("isAuthenticated()")
+    @GetMapping(value = "/bank-account-page")
+    public String myBankPage(){
+        return "bankAccountPage";
+    }
 
 }
