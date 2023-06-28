@@ -2,6 +2,7 @@ package kz.akello.project.superapp.model;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
@@ -14,9 +15,6 @@ public class Product extends BaseModel{
   @Column(name = "seller_name")
   private String sellerName;
 
-  @Column(name = "product_category")
-  private String category;
-
   @Column(name = "product_name")
   private String name;
 
@@ -25,4 +23,7 @@ public class Product extends BaseModel{
 
   @Column(name = "product_price")
   private double price;
+
+  @ManyToOne
+  private Category category;
 }

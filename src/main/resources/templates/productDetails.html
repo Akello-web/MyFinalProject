@@ -24,9 +24,7 @@
                 <div class="row mt-2">
                     <div class="col-12">
                         <select class="form-select" name="category" readonly>
-                            <option th:selected="${product.category} == 'CLOTHES'">CLOTHES</option>
-                            <option th:selected="${product.category} == 'DEVICES'">DEVICES</option>
-                            <option th:selected="${product.category} == 'FURNITURE'">FURNITURE</option>
+                            <option th:text="${product.category.name}"></option>
                         </select>
                     </div>
                 </div>
@@ -95,10 +93,10 @@
                                 </div>
                                 <div class="row mt-2">
                                     <div class="col-12">
-                                        <select class="form-select" name="category">
-                                            <option th:selected="${product.category} == 'CLOTHES'">CLOTHES</option>
-                                            <option th:selected="${product.category} == 'DEVICES'">DEVICES</option>
-                                            <option th:selected="${product.category} == 'FURNITURE'">FURNITURE</option>
+                                        <select class="form-select" name="category.id">
+                                            <option th:each="category : ${categories}"
+                                                    th:text="${category.name}" th:value="${category.id}"
+                                                    th:selected="${product.category.name == category.name}"></option>
                                         </select>
                                     </div>
                                 </div>
