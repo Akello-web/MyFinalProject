@@ -1,8 +1,7 @@
 package kz.akello.project.superapp.controller;
 
-import kz.akello.project.superapp.model.Product;
 import kz.akello.project.superapp.model.User;
-import kz.akello.project.superapp.service.ProductService;
+
 import kz.akello.project.superapp.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
