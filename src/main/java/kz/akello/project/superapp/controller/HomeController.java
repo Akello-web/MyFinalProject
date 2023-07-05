@@ -1,23 +1,31 @@
 package kz.akello.project.superapp.controller;
 
+import kz.akello.project.superapp.model.News;
 import kz.akello.project.superapp.model.User;
 
+import kz.akello.project.superapp.service.NewsService;
 import kz.akello.project.superapp.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.sql.Timestamp;
+
 @Controller
 @RequiredArgsConstructor
 public class HomeController {
 
     private final UserService userService;
+    private final NewsService newsService;
     @GetMapping(value = "/")
     public String indexPage(Model model) {
+        model.addAttribute("news", newsService.getNews());
         return "index";
     }
 
@@ -117,6 +125,13 @@ public class HomeController {
     public String myBankPage(){
 
         return "bankAccountPage";
+    }
+
+    @PreAuthorize("isAuthenticated()")
+    @PostMapping(value = "/add-news")
+    public String addNews(News news){
+        newsService.addNews(news);
+        return "redirect:/";
     }
 
 }

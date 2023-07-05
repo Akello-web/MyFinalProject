@@ -1,6 +1,15 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="layoutPage.html">
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      layout:decorate="layoutPage.html">
+<style>
+    /* Custom CSS */
+    .custom-link:hover {
+        color: red;
+        text-decoration: underline;
+    }
+</style>
 
     <div layout:fragment="content">
         <div class="row">
@@ -25,6 +34,24 @@
             </div>
             <div class="col-6 float-end">
                 <h1 class="text-center">WELCOME TO SUPER-APP!</h1>
+                <button sec:authorize="isAuthenticated()" class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#add-news-modal">
+                    +ADD NEWS</button>
+                <div th:each="thenew : ${news}">
+                    <div class="row mt-2" >
+                        <div class="col-12">
+                            <div class="card mb-2" style="width: 100%;">
+                                <div class="card-header d-flex justify-content-between">
+                                    <h5><a href="#" class="card-title text-black" th:text="${thenew.title}"></a></h5>
+                                    <p class="opacity-75 text-sm-end" th:text="${thenew.newsAuthor}" ></p>
+                                </div>
+                                <div class="card-body">
+                                    <p class="card-text" th:text="${thenew.description}"></p>
+                                    <p class="card-text opacity-75 text-sm-end" th:text="${thenew.postDate}" ></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="col-3 mt-2">
                 <div class="card" style="width: 18rem;">
@@ -40,6 +67,49 @@
                             <tbody id="cardWeatherBody">
                             </tbody>
                         </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal -->
+        <div class="modal fade" id="add-news-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">WHAT DID I DO FOR TODAY?</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form th:action="@{'/add-news'}" method="post">
+                            <div class="row mt-2">
+                                <div class="col-12">
+                                    <label> TITLE:</label>
+                                </div>
+                            </div>
+                            <div class="row mt-2">
+                                <div class="col-12">
+                                    <input class="form-control" type="text"
+                                           name="title" placeholder="title..."
+                                           required>
+                                </div>
+                            </div>
+                            <div class="row mt-4">
+                                <div class="col-12">
+                                    <label> DESCRIPTION:</label>
+                                </div>
+                            </div>
+                            <div class="row mt-2">
+                                <div class="col-12">
+                                    <textarea class="form-control" placeholder="description" name="description"
+                                              required></textarea>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button class="btn btn-primary">ADD</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
