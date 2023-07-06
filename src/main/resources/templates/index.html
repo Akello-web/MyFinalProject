@@ -3,13 +3,6 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       layout:decorate="layoutPage.html">
-<style>
-    /* Custom CSS */
-    .custom-link:hover {
-        color: red;
-        text-decoration: underline;
-    }
-</style>
 
     <div layout:fragment="content">
         <div class="row">
@@ -41,7 +34,10 @@
                         <div class="col-12">
                             <div class="card mb-2" style="width: 100%;">
                                 <div class="card-header d-flex justify-content-between">
-                                    <h5><a href="#" class="card-title text-black" th:text="${thenew.title}"></a></h5>
+                                    <h5 class="title-link"><a
+                                            th:href="@{'/' + ${thenew.id}}"
+                                            class="card-title text-black text-decoration-none"
+                                            th:text="${thenew.title}"></a></h5>
                                     <p class="opacity-75 text-sm-end" th:text="${thenew.newsAuthor}" ></p>
                                 </div>
                                 <div class="card-body">
@@ -55,7 +51,7 @@
             </div>
             <div class="col-3 mt-2">
                 <div class="card" style="width: 18rem;">
-                    <div class="card-body">
+                    <div class="card-body bg-image">
                         <h5 class="card-title">CURRENT WEATHER</h5>
                         <table class="table">
                             <thead>
@@ -101,7 +97,7 @@
                             </div>
                             <div class="row mt-2">
                                 <div class="col-12">
-                                    <textarea class="form-control" placeholder="description" name="description"
+                                    <textarea class="form-control" placeholder="description..." name="description"
                                               required></textarea>
                                 </div>
                             </div>
@@ -156,5 +152,4 @@
             }
         </script>
     </div>
-
 </html>

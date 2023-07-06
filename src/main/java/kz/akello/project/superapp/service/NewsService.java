@@ -1,7 +1,6 @@
 package kz.akello.project.superapp.service;
 
 import kz.akello.project.superapp.model.News;
-import kz.akello.project.superapp.model.Product;
 import kz.akello.project.superapp.repository.NewsRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
@@ -19,7 +18,19 @@ public class NewsService {
     return newsRepository.findAll();
   }
 
+  public News getNew(Long id){
+    return newsRepository.findById(id).orElse(null);
+  }
+
   public News addNews(News news){
+    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+    String currentUserName = authentication.getName();
+    news.setNewsAuthor(currentUserName);
+    news.setPostDate(new Timestamp(System.currentTimeMillis()));
+    return newsRepository.save(news);
+  }
+
+  public News updateNews(News news){
     Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
     String currentUserName = authentication.getName();
     news.setNewsAuthor(currentUserName);

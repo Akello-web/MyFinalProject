@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="layoutPage.html">
+<div layout:fragment="content">
+    <div class="row">
+        <div class="col-6 mx-auto">
+            <div class="row mt-2">
+                <div class="col-12">
+                    <label> AUTHOR:</label>
+                </div>
+            </div>
+            <div class="row mt-2">
+                <div class="col-12">
+                    <input class="form-control" th:value="${thenew.newsAuthor}"
+                           readonly>
+                </div>
+            </div>
+            <div class="row mt-2">
+                <div class="col-12">
+                    <label> TITLE:</label>
+                </div>
+            </div>
+            <div class="row mt-2">
+                <div class="col-12">
+                    <input class="form-control" type="text"
+                           name="title" th:value="${thenew.title}"
+                           readonly>
+                </div>
+            </div>
+            <div class="row mt-4">
+                <div class="col-12">
+                    <label> DESCRIPTION:</label>
+                </div>
+            </div>
+            <div class="row mt-2">
+                <div class="col-12">
+                        <textarea class="form-control" name="description" th:text="${thenew.description}"
+                                  readonly></textarea>
+                </div>
+            </div>
+
+            <div class="row mt-2">
+                <div class="col-12">
+                    <label> DATE POSTED:</label>
+                </div>
+            </div>
+            <div class="row mt-2">
+                <div class="col-12">
+                    <input class="form-control" th:value="${thenew.postDate}"
+                           readonly>
+                </div>
+            </div>
+
+            <div class="modal-footer mt-2" sec:authorize="isAuthenticated()"
+                 th:if="${#authentication.name == thenew.newsAuthor}">
+                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#edit-news-modal">
+                    EDIT
+                </button>
+                <button class="btn btn-danger ms-2" data-bs-toggle="modal" data-bs-target="#delete-news-modal">
+                    DELETE
+                </button>
+            </div>
+
+            <!-- Modal -->
+            <div class="modal fade" id="edit-news-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="exampleModalLabel">UPDATE YOUR PRODUCT</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form th:action="@{'/update-news'}" method="post">
+                                <input type="hidden" name="id" th:value="${thenew.id}">
+                                <div class="row mt-2">
+                                    <div class="col-12">
+                                        <label> TITLE:</label>
+                                    </div>
+                                </div>
+                                <div class="row mt-2">
+                                    <div class="col-12">
+                                        <input class="form-control" type="text"
+                                               name="title" th:value="${thenew.title}">
+                                    </div>
+                                </div>
+                                <div class="row mt-4">
+                                    <div class="col-12">
+                                        <label> DESCRIPTION:</label>
+                                    </div>
+                                </div>
+                                <div class="row mt-2">
+                                    <div class="col-12">
+                                        <textarea class="form-control"
+                                                  name="description" th:text="${thenew.description}"></textarea>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                    <button class="btn btn-primary">UPDATE</button>
+                                </div>
+                            </form>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- DELETE Modal -->
+        <div class="modal fade" id="delete-news-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <form th:action="@{'/delete-news'}" method="post">
+                        <input type="hidden" name="id" th:value="${thenew.id}">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="exampleModalLabelDelete">Confirm delete</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            ARE YOU SURE?
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button class="btn btn-danger ms-2">DELETE</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    </div>
+</div>
+</html>
+

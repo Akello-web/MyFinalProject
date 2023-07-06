@@ -7,15 +7,13 @@ import kz.akello.project.superapp.service.NewsService;
 import kz.akello.project.superapp.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.sql.Timestamp;
 
 @Controller
 @RequiredArgsConstructor
@@ -131,6 +129,25 @@ public class HomeController {
     @PostMapping(value = "/add-news")
     public String addNews(News news){
         newsService.addNews(news);
+        return "redirect:/";
+    }
+
+    @GetMapping(value = "/{id}")
+    public String newsDetails(Model model,
+                              @PathVariable(name = "id") Long id){
+        model.addAttribute("thenew", newsService.getNew(id));
+        return "newsDetails";
+    }
+
+    @PostMapping(value = "/update-news")
+    public String updateNews(News news, @RequestParam(name = "id") Long id){
+        newsService.updateNews(news);
+        return "redirect:/" + id;
+    }
+
+    @PostMapping(value = "/delete-news")
+    public String deleteNews(@RequestParam(name = "id") Long id){
+        newsService.deleteNews(id);
         return "redirect:/";
     }
 

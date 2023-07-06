@@ -5,6 +5,17 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <link rel="stylesheet" type="text/css" th:href="@{'/css/bootstrap.min.css'}">
+    <style>
+      .bg-image {
+        background-image: url('https://cdn.pixabay.com/photo/2015/07/05/10/18/tree-832079_1280.jpg');
+        background-size: cover;
+        background-position: center;
+      }
+
+      .title-link:hover{
+        text-decoration: underline;
+      }
+    </style>
   </head>
 <body>
 <div th:insert="navbar.html"></div>
