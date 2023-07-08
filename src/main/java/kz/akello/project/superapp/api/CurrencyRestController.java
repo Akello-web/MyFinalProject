@@ -13,10 +13,10 @@ import org.springframework.web.client.RestTemplate;
 
 @RestController
 @RequiredArgsConstructor
-public class CurrencyController {
+public class CurrencyRestController {
 
     @GetMapping("/exchange-rate")
-    public ResponseEntity<String> getExchangeRate(Model model) throws JsonProcessingException {
+    public ResponseEntity<String> getExchangeRate() throws JsonProcessingException {
         // Create a RestTemplate instance
         RestTemplate restTemplate = new RestTemplate();
 

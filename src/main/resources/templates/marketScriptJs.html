@@ -14,7 +14,7 @@
           tableContent+="<td>"+productList[i].id+"</td>";
           tableContent+="<td>"+productList[i].sellerName+"</td>";
           tableContent+="<td>"+productList[i].name+"</td>";
-          tableContent+="<td>"+productList[i].price+"</td>";
+          tableContent+="<td>"+productList[i].price+"$</td>";
           tableContent+="<td><button class='btn btn-sm btn-success' " +
                   "onclick='openProductDetailsModel("+productList[i].id+")'>DETAILS</button</td>";
           tableContent+="</tr>";          }
@@ -87,10 +87,7 @@
 
     httpRequest.onreadystatechange = function (){
       if(httpRequest.readyState == XMLHttpRequest.DONE && httpRequest.status == 200){
-        // sellerName.value = "";
-        // productName.value = "";
-        // productDescription.value = "";
-        // productPrice.value = "";
+
         loadProducts();
       }
     }

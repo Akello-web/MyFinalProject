@@ -22,14 +22,13 @@ public class HomeController {
 
     private final UserService userService;
     private final NewsService newsService;
-    private final ProductService productService;
     @GetMapping(value = "/")
     public String indexPage(Model model) {
         model.addAttribute("news", newsService.getNews());
         return "index";
     }
 
-    @GetMapping(value = "/productsPage")
+    @GetMapping(value = "/products-page")
     public String productPage(){
         return "marketPage";
     }
@@ -128,7 +127,6 @@ public class HomeController {
     @PreAuthorize("isAuthenticated()")
     @GetMapping(value = "/bank-account-page")
     public String myBankPage(){
-
         return "bankAccountPage";
     }
 

@@ -3,6 +3,7 @@ package kz.akello.project.superapp.api;
 import kz.akello.project.superapp.model.Product;
 import kz.akello.project.superapp.service.ProductService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,7 +19,7 @@ public class ProductRestController {
     return productService.getProducts();
   }
 
-//  @PreAuthorize("hasAnyRole('ROLE_SELLER')")
+  @PreAuthorize("hasAnyRole('ROLE_SELLER')")
   @PostMapping
   public Product addProduct(@RequestBody Product product){
     return productService.addProduct(product);
@@ -29,13 +30,13 @@ public class ProductRestController {
     return productService.getProduct(id);
   }
 
-//  @PreAuthorize("hasAnyRole('ROLE_SELLER')")
+  @PreAuthorize("hasAnyRole('ROLE_SELLER', 'ROLE_ADMIN')")
   @PutMapping
   public Product updateProduct(@RequestBody Product product){
     return productService.updateProduct(product);
   }
 
-//  @PreAuthorize("hasAnyRole('ROLE_SELLER')")
+  @PreAuthorize("hasAnyRole('ROLE_SELLER', 'ROLE_ADMIN')")
   @DeleteMapping("{id}")
   public void deleteProduct(@PathVariable(name = "id") Long id){
     productService.deleteProduct(id);

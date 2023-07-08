@@ -11,11 +11,11 @@ import org.springframework.web.client.RestTemplate;
 
 @RestController
 @RequiredArgsConstructor
-public class WeatherController {
+public class WeatherRestController {
   private final ObjectMapper objectMapper;
 
   @GetMapping(value = "/get-weather")
-  public WeatherData getWeatherAPI(Model model) {
+  public WeatherData getWeatherAPI() {
     RestTemplate restTemplate = new RestTemplate();
 
     String apiUrl = "http://api.weatherapi.com/v1/current.json?key=62f28c27428f4252883193758230307&q=Almaty&aqi=no";
