@@ -47,14 +47,12 @@
                 <tr>
                     <th>ID</th>
                     <th>NAME</th>
-                    <th>DELETE</th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr th:each="category : ${categories}">
                     <td th:text="${category.id}"></td>
                     <td th:text="${category.name}"></td>
-                    <td><button>DETAILS</button></td>
                 </tr>
                 </tbody>
             </table>
