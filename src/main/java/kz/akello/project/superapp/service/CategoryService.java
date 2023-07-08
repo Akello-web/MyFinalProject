@@ -16,7 +16,15 @@ public class CategoryService {
     return categoryRepository.findAll();
   }
 
+  public Category getCategory(Long id){
+    return categoryRepository.findById(id).orElse(null);
+  }
+
   public Category addCategory(Category category){
+    return categoryRepository.save(category);
+  }
+
+  public Category updateCategory(Category category){
     return categoryRepository.save(category);
   }
 

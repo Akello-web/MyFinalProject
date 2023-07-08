@@ -4,6 +4,7 @@ import kz.akello.project.superapp.model.News;
 import kz.akello.project.superapp.model.User;
 
 import kz.akello.project.superapp.service.NewsService;
+import kz.akello.project.superapp.service.ProductService;
 import kz.akello.project.superapp.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -21,10 +22,16 @@ public class HomeController {
 
     private final UserService userService;
     private final NewsService newsService;
+    private final ProductService productService;
     @GetMapping(value = "/")
     public String indexPage(Model model) {
         model.addAttribute("news", newsService.getNews());
         return "index";
+    }
+
+    @GetMapping(value = "/productsPage")
+    public String productPage(){
+        return "marketPage";
     }
 
     @GetMapping(value = "/sign-in-page")

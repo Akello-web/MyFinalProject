@@ -1,12 +1,79 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="layoutPage.html">
 
 <div layout:fragment="content">
+  <input type="hidden" id="productId">
   <div class="row">
-    <div class="col-9
-     mx-auto">
+    <div class="col-9 mx-auto">
       <h2 class="text-center">AQYL MARKET</h2>
+      <div sec:authorize="hasAnyRole('ROLE_SELLER')">
+        <button type="button" class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#addProductModal"
+        onclick="categoriesInput()">
+          +ADD PRODUCT
+        </button>
+        <!-- Modal -->
+        <div class="modal fade" id="addProductModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h1 class="modal-title fs-5" id="ModalLabel">ADD NEW PRODUCT</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body" sec:authorize="isAuthenticated()">
+                <input class="form-control" type="hidden" id="sellerName" th:value="${#authentication.principal.fullName}">
+                <div class="row mt-2">
+                  <div class="col-12">
+                    <label>CATEGORY:</label>
+                  </div>
+                </div>
+                <div class="row mt-2">
+                  <div class="col-12">
+                    <select class="form-control" id="productCategory">
+                    </select>
+                  </div>
+                </div>
+                <div class="row mt-2">
+                  <div class="col-12">
+                    <label>NAME:</label>
+                  </div>
+                </div>
+                <div class="row mt-2">
+                  <div class="col-12">
+                    <input class="form-control" type="text" id="productName" required>
+                  </div>
+                </div>
+                <div class="row mt-2">
+                  <div class="col-12">
+                    <label>DESCRIPTION:</label>
+                  </div>
+                </div>
+                <div class="row mt-2">
+                  <div class="col-12">
+                    <textarea class="form-control" id="productDescription" required></textarea>
+                  </div>
+                </div>
+                <div class="row mt-2">
+                  <div class="col-12">
+                    <label>PRICE:</label>
+                  </div>
+                </div>
+                <div class="row mt-2">
+                  <div class="col-12">
+                    <input class="form-control" type="text" id="productPrice" required>
+                  </div>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">CANCEL</button>
+                <button type="button" class="btn btn-success" data-bs-dismiss="modal" onclick="addProduct()">ADD</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <table class="table table-striped">
         <thead>
         <tr>
@@ -17,19 +84,39 @@
           <th>DETAILS</th>
         </tr>
         </thead>
-        <tbody>
-        <tr th:each="product : ${products}">
-          <td th:text="${product.id}"></td>
-          <td th:text="${product.sellerName}"></td>
-          <td th:text="${product.name}"></td>
-          <td th:text="${product.price} + '$'"></td>
-          <td>
-            <a th:href="@{'/products/' + ${product.id}}" class="btn btn-sm btn-success">DETAILS</a>
-          </td>
-        </tr>
+        <tbody id="productTableBody">
         </tbody>
       </table>
+
+      <!-- Modal -->
+      <div class="modal fade" id="detailsModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="exampleModalLabel">PRODUCT DETAILS</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div sec:authorize="!hasAnyRole('ROLE_ADMIN')" th:insert="toInsertModalDetails.html"></div>
+            <div sec:authorize="hasAnyRole('ROLE_ADMIN')" th:insert="toInsertModalDetailsAdmin.html"></div>
+
+            <div class="modal-footer" sec:authorize="!hasAnyRole('ROLE_ADMIN')">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary">BUY</button>
+            </div>
+            <div class="modal-footer" sec:authorize="hasAnyRole('ROLE_ADMIN')">
+              <button type="button" class="btn btn-danger" onclick="deleteProduct()">DELETE</button>
+              <button type="button" class="btn btn-primary" onclick="updateProduct()">SAVE</button>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
     </div>
+  </div>
+
+  <div th:insert="marketScriptJs.html">
   </div>
 
 </div>
