@@ -1,0 +1,103 @@
+<script type="text/javascript">
+    loadNews();
+    function loadNews(){
+        const httpRequest = new XMLHttpRequest();
+        httpRequest.open("GET", "/news", true);
+        httpRequest.onreadystatechange = function (){
+            if(httpRequest.readyState == XMLHttpRequest.DONE && httpRequest.status == 200){
+
+                let newsList = JSON.parse(httpRequest.responseText);
+
+
+                let innerContent = "";
+                for (let i = 0; i < newsList.length; i++) {
+
+                    var postDate = new Date(newsList[i].postDate);
+                    var formattedPostDate = postDate.toLocaleString("en-US", {
+                        year: "numeric",
+                        month: "2-digit",
+                        day: "2-digit",
+                        hour: "2-digit",
+                        minute: "2-digit",
+                        second: "2-digit",
+                    });
+
+                    innerContent += "<div class='card mb-2' style='width: 100%;'>";
+                    innerContent += "<div class='card-header d-flex justify-content-between'>";
+                    innerContent += "<h5 class='title-link'>";
+                    innerContent += "<a href='/"+newsList[i].id+"' class='card-title text-black text-decoration-none'>"+newsList[i].title+"</a></h5>";
+                    innerContent += "<p class='opacity-75 text-sm-end'>"+newsList[i].newsAuthor+"</p></div>";
+                    innerContent += "<div class='card-body'>";
+                    innerContent += "<p class='card-text'>"+newsList[i].description+"</p>";
+                    innerContent += "<p class='card-text opacity-75 text-sm-end'>"+formattedPostDate+"</p></div></div>";
+
+                }
+                document.getElementById("newsContentCard").innerHTML = innerContent;
+            }
+        }
+        httpRequest.send();
+    }
+
+    function addNews(){
+        const httpRequest = new XMLHttpRequest();
+        httpRequest.open("POST", "/news", true);
+        httpRequest.setRequestHeader("Content-Type", "application/json");
+
+        let title = document.getElementById("title")
+        let description = document.getElementById("description")
+
+        httpRequest.onreadystatechange = function (){
+            if(httpRequest.readyState == XMLHttpRequest.DONE && httpRequest.status == 200){
+                title.value = "";
+                description.value = "";
+                loadNews();
+            }
+        }
+
+        let body = {
+            'title': title.value,
+            'description': description.value
+        }
+        body = JSON.stringify(body);
+        httpRequest.send(body);
+    }
+
+    loadCourses();
+    loadWeather();
+
+    function loadCourses(){
+        const httpRequest = new XMLHttpRequest();
+        httpRequest.open("GET", "/exchange-rate", true);
+        httpRequest.onreadystatechange = function (){
+            if(httpRequest.readyState === XMLHttpRequest.DONE && httpRequest.status === 200){
+                let currencyList = JSON.parse(httpRequest.responseText);
+                let miniTableContent = "" +
+                    "<tr><td>EUR</td><td>"+currencyList.EUR+"</td></tr>" +
+                    "<tr><td>RUB</td><td>"+currencyList.RUB+"</td></tr>" +
+                    "<tr><td>KZT</td><td>"+currencyList.KZT+"</td></tr>";
+
+                document.getElementById("cardBodyExchange").innerHTML = miniTableContent;
+            }
+        }
+        httpRequest.send();
+    }
+
+
+    function loadWeather(){
+        const httpRequest = new XMLHttpRequest();
+        httpRequest.open("GET", "/get-weather", true);
+        httpRequest.onreadystatechange = function (){
+            if(httpRequest.readyState === XMLHttpRequest.DONE && httpRequest.status === 200){
+                let weatherList = JSON.parse(httpRequest.responseText);
+                let miniTableContent = "" +
+                    "<tr><td>In celsius:</td><td>"+weatherList.current.temp_c+"C</td></tr>" +
+                    "<tr><td>In fahrenheit:</td><td>"+weatherList.current.temp_f+"F</td></tr>" +
+                    "<tr><td>Wind:</td><td>"+weatherList.current.wind_kph+" kph</td></tr>" +
+                    "<tr><td>Local time:</td><td>"+weatherList.location.localtime+"</td></tr>";
+
+                document.getElementById("cardWeatherBody").innerHTML = miniTableContent;
+            }
+        }
+        httpRequest.send();
+    }
+</script>

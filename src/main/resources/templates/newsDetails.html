@@ -71,8 +71,7 @@
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                            <form th:action="@{'/update-news'}" method="post">
-                                <input type="hidden" name="id" th:value="${thenew.id}">
+                                <input type="hidden" id="updateNewId" th:value="${thenew.id}">
                                 <div class="row mt-2">
                                     <div class="col-12">
                                         <label> TITLE:</label>
@@ -81,7 +80,7 @@
                                 <div class="row mt-2">
                                     <div class="col-12">
                                         <input class="form-control" type="text"
-                                               name="title" th:value="${thenew.title}">
+                                               id="title" th:value="${thenew.title}">
                                     </div>
                                 </div>
                                 <div class="row mt-4">
@@ -92,45 +91,86 @@
                                 <div class="row mt-2">
                                     <div class="col-12">
                                         <textarea class="form-control"
-                                                  name="description" th:text="${thenew.description}"></textarea>
+                                                  id="description" th:text="${thenew.description}"></textarea>
                                     </div>
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                                    <button class="btn btn-primary">UPDATE</button>
+                                    <button class="btn btn-primary" onclick="updateNews()">UPDATE</button>
                                 </div>
-                            </form>
+
                         </div>
 
                     </div>
                 </div>
             </div>
-        </div>
 
-        <!-- DELETE Modal -->
-        <div class="modal fade" id="delete-news-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <form th:action="@{'/delete-news'}" method="post">
-                        <input type="hidden" name="id" th:value="${thenew.id}">
-                        <div class="modal-header">
-                            <h1 class="modal-title fs-5" id="exampleModalLabelDelete">Confirm delete</h1>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            ARE YOU SURE?
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button class="btn btn-danger ms-2">DELETE</button>
-                        </div>
-                    </form>
+            <!-- DELETE Modal -->
+            <div class="modal fade" id="delete-news-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                            <input type="hidden" id="deleteNewId" th:value="${thenew.id}">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="exampleModalLabelDelete">Confirm delete</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                ARE YOU SURE?
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button class="btn btn-danger ms-2" onclick="deleteNews()">DELETE</button>
+                            </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
-    </div>
+    <script type="text/javascript">
+        function updateNews(){
+            const httpRequest = new XMLHttpRequest();
+            httpRequest.open("PUT", "/news", true);
+            httpRequest.setRequestHeader("Content-Type", "application/json");
+
+            let id = document.getElementById("updateNewId")
+            let title = document.getElementById("title")
+            let description = document.getElementById("description")
+
+            httpRequest.onreadystatechange = function (){
+                if(httpRequest.readyState == XMLHttpRequest.DONE && httpRequest.status == 200){
+
+                    location.reload();
+                }
+            }
+
+            let body = {
+                'id': id.value,
+                'title': title.value,
+                'description': description.value
+            }
+            body = JSON.stringify(body);
+            httpRequest.send(body);
+        }
+
+        function deleteNews(){
+
+            let newsId = document.getElementById("deleteNewId")
+
+            const httpRequest = new XMLHttpRequest();
+            httpRequest.open("DELETE", "/news/" + newsId.value, true);
+
+
+            httpRequest.onreadystatechange = function (){
+                if(httpRequest.readyState == XMLHttpRequest.DONE && httpRequest.status == 200){
+                    window.location.href = "/";
+                }
+            }
+            httpRequest.send();
+
+        }
+    </script>
+
 </div>
 </html>
 

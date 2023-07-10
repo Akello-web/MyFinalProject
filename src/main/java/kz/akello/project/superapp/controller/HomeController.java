@@ -4,7 +4,6 @@ import kz.akello.project.superapp.model.News;
 import kz.akello.project.superapp.model.User;
 
 import kz.akello.project.superapp.service.NewsService;
-import kz.akello.project.superapp.service.ProductService;
 import kz.akello.project.superapp.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -23,14 +22,19 @@ public class HomeController {
     private final UserService userService;
     private final NewsService newsService;
     @GetMapping(value = "/")
-    public String indexPage(Model model) {
-        model.addAttribute("news", newsService.getNews());
+    public String indexPage() {
         return "index";
     }
 
     @GetMapping(value = "/products-page")
     public String productPage(){
         return "marketPage";
+    }
+
+    @GetMapping(value = "/{id}")
+    public String newsDetails(Model model, @PathVariable(name = "id") Long id){
+        model.addAttribute("thenew", newsService.getNew(id));
+        return "newsDetails";
     }
 
     @GetMapping(value = "/sign-in-page")
@@ -44,7 +48,7 @@ public class HomeController {
     }
 
     @PostMapping(value = "/to-sign-up")
-    public String toSignUp(Model model,
+    public String toSignUp(
                            @RequestParam(name = "user_full_name") String fullName,
                            @RequestParam(name = "user_age") int userAge,
                            @RequestParam(name = "user_email") String email,
@@ -128,32 +132,6 @@ public class HomeController {
     @GetMapping(value = "/bank-account-page")
     public String myBankPage(){
         return "bankAccountPage";
-    }
-
-    @PreAuthorize("isAuthenticated()")
-    @PostMapping(value = "/add-news")
-    public String addNews(News news){
-        newsService.addNews(news);
-        return "redirect:/";
-    }
-
-    @GetMapping(value = "/{id}")
-    public String newsDetails(Model model,
-                              @PathVariable(name = "id") Long id){
-        model.addAttribute("thenew", newsService.getNew(id));
-        return "newsDetails";
-    }
-
-    @PostMapping(value = "/update-news")
-    public String updateNews(News news, @RequestParam(name = "id") Long id){
-        newsService.updateNews(news);
-        return "redirect:/" + id;
-    }
-
-    @PostMapping(value = "/delete-news")
-    public String deleteNews(@RequestParam(name = "id") Long id){
-        newsService.deleteNews(id);
-        return "redirect:/";
     }
 
 }

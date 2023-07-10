@@ -87,7 +87,11 @@
 
     httpRequest.onreadystatechange = function (){
       if(httpRequest.readyState == XMLHttpRequest.DONE && httpRequest.status == 200){
-
+          sellerName.value = "";
+          productName.value = "";
+          productDescription.value = "";
+          productPrice.value = "";
+          productCategory.value = "";
         loadProducts();
       }
     }
