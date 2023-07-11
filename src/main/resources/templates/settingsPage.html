@@ -5,9 +5,38 @@
 <div layout:fragment="content">
     <div class="row">
         <div class="col-6 mx-auto">
-
             <h2 class="text-center">Settings</h2>
 
+            <h5 class="mt-4 text-center">CHANGE PROFILE PARAMETERS:</h5>
+            <form method="post" th:action="@{'/change-params'}">
+<!--                <input type="hidden" name="id" th:value="${#authentication.principal.id}">-->
+                <div class="row mt-2">
+                    <div class="col-12">
+                        <label>FULL NAME:</label>
+                    </div>
+                </div>
+                <div class="row mt-2">
+                    <div class="col-12">
+                        <input class="form-control" type="text" name="fullName"
+                               th:value="${#authentication.principal.fullName}" required>
+                    </div>
+                </div>
+
+                <div class="row mt-4">
+                    <div class="col-12">
+                        <label>AGE:</label>
+                    </div>
+                </div>
+                <div class="row mt-2">
+                    <div class="col-12">
+                        <input class="form-control" type="number" name="age"
+                               th:value="${#authentication.principal.age}" required>
+                    </div>
+                </div>
+                <button class="btn btn-success mt-2">UPDATE</button>
+            </form>
+
+            <h5 class="mt-4 text-center">CHANGE PASSWORD:</h5>
             <div class="alert alert-danger alert-dismissible fade show" role="alert"
                  th:if="${param.oldPasswordError!=null}">
                 Incorrect old password
@@ -25,7 +54,7 @@
             </div>
 
             <form method="post" th:action="@{'/to-update-password'}">
-                <div class="row mt-4">
+                <div class="row mt-2">
                     <div class="col-12">
                         <label>OLD PASSWORD:</label>
                     </div>

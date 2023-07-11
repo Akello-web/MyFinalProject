@@ -1,6 +1,4 @@
 package kz.akello.project.superapp.controller;
-
-import kz.akello.project.superapp.model.News;
 import kz.akello.project.superapp.model.User;
 
 import kz.akello.project.superapp.service.NewsService;
@@ -31,6 +29,12 @@ public class HomeController {
         return "marketPage";
     }
 
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+    @GetMapping(value = "/admin-panel")
+    public String adminPage(){
+        return "adminPage";
+    }
+
     @GetMapping(value = "/{id}")
     public String newsDetails(Model model, @PathVariable(name = "id") Long id){
         model.addAttribute("thenew", newsService.getNew(id));
@@ -45,6 +49,31 @@ public class HomeController {
     @GetMapping(value = "/sign-up-page")
     public String signUpPage(){
         return "signUpPage";
+    }
+
+    @PreAuthorize("isAuthenticated()")
+    @GetMapping(value = "/profile")
+    public String profilePage(){
+        return "profile";
+    }
+
+    @PreAuthorize("isAuthenticated()")
+    @GetMapping(value = "/settings-page")
+    public String settingsPage(){
+        return "settingsPage";
+    }
+
+    @PreAuthorize("isAuthenticated()")
+    @GetMapping(value = "/currency-all")
+    public String getAllCurrency(){
+        return "exchangeRate";
+    }
+
+    @PostMapping(value = "/change-params")
+    public String toChangeParams(@RequestParam(name = "fullName") String fullName,
+                                 @RequestParam(name = "age") int age){
+        userService.updateParams(fullName, age);
+        return "redirect:/settings-page";
     }
 
     @PostMapping(value = "/to-sign-up")
@@ -94,18 +123,6 @@ public class HomeController {
             }
     }
 
-    @PreAuthorize("isAuthenticated()")
-    @GetMapping(value = "/profile")
-    public String profilePage(){
-        return "profile";
-    }
-
-    @PreAuthorize("isAuthenticated()")
-    @GetMapping(value = "/settings-page")
-    public String settingsPage(){
-        return "settingsPage";
-    }
-
     @PostMapping(value = "/to-update-password")
     public String updatePassword(@RequestParam("user_old_password") String oldPassword,
                                  @RequestParam("user_new_password") String newPassword,
@@ -121,17 +138,4 @@ public class HomeController {
             return "redirect:/settings-page?passwordMismatch";
         }
     }
-
-    @PreAuthorize("isAuthenticated()")
-    @GetMapping(value = "/currency-all")
-    public String getAllCurrency(){
-        return "exchangeRate";
-    }
-
-    @PreAuthorize("isAuthenticated()")
-    @GetMapping(value = "/bank-account-page")
-    public String myBankPage(){
-        return "bankAccountPage";
-    }
-
 }

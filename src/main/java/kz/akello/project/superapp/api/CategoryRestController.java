@@ -25,7 +25,7 @@ public class CategoryRestController {
   }
 
   @PostMapping
-  public Category addCategory(Category category){
+  public Category addCategory(@RequestBody Category category){
     return categoryService.addCategory(category);
   }
 

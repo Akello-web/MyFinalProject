@@ -86,6 +86,13 @@ public class UserService implements UserDetailsService {
         return null;
     }
 
+    public User updateParams(String fullName, int age){
+        User currentUser = getCurrentSessionUser();
+        currentUser.setFullName(fullName);
+        currentUser.setAge(age);
+        return userRepository.save(currentUser);
+    }
+
     public User getCurrentSessionUser(){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if(!(authentication instanceof AnonymousAuthenticationToken)){
