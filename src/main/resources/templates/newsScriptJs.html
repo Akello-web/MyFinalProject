@@ -93,7 +93,7 @@
                     "<tr><td>In celsius:</td><td>"+weatherList.current.temp_c+"C</td></tr>" +
                     "<tr><td>In fahrenheit:</td><td>"+weatherList.current.temp_f+"F</td></tr>" +
                     "<tr><td>Wind:</td><td>"+weatherList.current.wind_kph+" kph</td></tr>" +
-                    "<tr><td>Local time:</td><td>"+weatherList.location.localtime+"</td></tr>";
+                    "<tr><td>Updated:</td><td>"+weatherList.current.last_updated+"</td></tr>";
 
                 document.getElementById("cardWeatherBody").innerHTML = miniTableContent;
             }

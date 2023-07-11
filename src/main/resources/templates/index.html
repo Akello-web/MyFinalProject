@@ -8,9 +8,9 @@
         <div class="row">
             <div class="col-3 mt-2">
                 <div class="card" style="width: 18rem;">
-                    <div class="card-body">
+                    <div class="card-body bg-currency-image">
                         <h5 class="card-title">Current USD exchange rates</h5>
-                        <table class="table">
+                        <table class="table table-hover">
                             <thead>
                             <tr class="card-text mb-2">
                                 <th>NAME</th>
@@ -21,12 +21,12 @@
                             </tbody>
                         </table>
                         <p class="card-text" id="cardText"></p>
-                        <a href="/currency-all" class="btn btn-sm btn-primary">See All</a>
+                        <a href="/currency-all" class="btn btn-sm btn-outline-success">See All</a>
                     </div>
                 </div>
             </div>
             <div class="col-6 float-end">
-                <h1 class="text-center">WELCOME TO SUPER-APP!</h1>
+                <h2 class="text-center">WELCOME TO SUPER-APP!</h2>
                 <input type="hidden" id="newsId">
                 <button sec:authorize="isAuthenticated()" class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#add-news-modal">
                     +ADD NEWS</button>
