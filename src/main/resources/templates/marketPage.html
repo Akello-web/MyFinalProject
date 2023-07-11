@@ -5,6 +5,9 @@
 
 <div layout:fragment="content">
   <input type="hidden" id="productId">
+  <div sec:authorize="isAuthenticated()">
+    <input type="hidden" id="currentUserName" th:value="${#authentication.principal.fullName}">
+  </div>
   <div class="row">
     <div class="col-9 mx-auto">
       <h2 class="text-center">AQYL MARKET</h2>
@@ -100,7 +103,7 @@
             <div sec:authorize="!hasAnyRole('ROLE_ADMIN')" th:insert="toInsertModalDetails.html"></div>
             <div sec:authorize="hasAnyRole('ROLE_ADMIN')" th:insert="toInsertModalDetailsAdmin.html"></div>
 
-            <div class="modal-footer" sec:authorize="!hasAnyRole('ROLE_ADMIN')">
+            <div class="modal-footer" id="modal-footer" sec:authorize="!hasAnyRole('ROLE_ADMIN')">
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
               <button type="button" class="btn btn-primary">BUY</button>
             </div>
@@ -108,7 +111,6 @@
               <button type="button" class="btn btn-danger" onclick="deleteProduct()">DELETE</button>
               <button type="button" class="btn btn-primary" onclick="updateProduct()">SAVE</button>
             </div>
-
           </div>
         </div>
       </div>
