@@ -1,4 +1,5 @@
 package kz.akello.project.superapp.controller;
+
 import kz.akello.project.superapp.model.User;
 
 import kz.akello.project.superapp.service.NewsService;

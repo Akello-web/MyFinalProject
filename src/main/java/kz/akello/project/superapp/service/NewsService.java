@@ -8,7 +8,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
 import java.util.List;
 
 @Service
@@ -16,7 +15,7 @@ import java.util.List;
 public class NewsService {
   private final NewsRepository newsRepository;
   public List<News> getNews(){
-    return newsRepository.findAll();
+    return newsRepository.findAllOrderedByDateDesc();
   }
 
   public News getNew(Long id){
