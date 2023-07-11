@@ -36,6 +36,12 @@ public class HomeController {
         return "adminPage";
     }
 
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+    @GetMapping(value = "/categories-panel")
+    public String categoryPage(){
+        return "categoryPage";
+    }
+
     @GetMapping(value = "/{id}")
     public String newsDetails(Model model, @PathVariable(name = "id") Long id){
         model.addAttribute("thenew", newsService.getNew(id));

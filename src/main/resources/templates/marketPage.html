@@ -12,10 +12,14 @@
     <div class="col-9 mx-auto">
       <h2 class="text-center">AQYL MARKET</h2>
       <div sec:authorize="hasAnyRole('ROLE_SELLER')">
-        <button type="button" class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#addProductModal"
-        onclick="categoriesInput()">
-          +ADD PRODUCT
-        </button>
+        <div class="d-flex justify-content-between">
+          <button type="button" class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#addProductModal"
+                  onclick="categoriesInput()">
+            +ADD PRODUCT
+          </button>
+          <a sec:authorize="hasAnyRole('ROLE_ADMIN')" href="/categories-panel" class="btn btn-sm btn-outline-primary">Categories Panel</a>
+        </div>
+
         <!-- Modal -->
         <div class="modal fade" id="addProductModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
           <div class="modal-dialog">

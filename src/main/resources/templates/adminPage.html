@@ -2,118 +2,149 @@
 <html lang="en"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="layoutPage.html">
 <div layout:fragment="content">
+    <h4 class="text-center">ADMIN PANEL</h4>
+    <div class="row mt-2">
+        <div class="col-8 mx-auto">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>EMAIL</th>
+                    <th>FULL NAME</th>
+                    <th>AGE</th>
+                    <th>DETAILS</th>
+                </tr>
+                </thead>
+                <tbody id="usersTableBody">
+                </tbody>
+            </table>
+        </div>
+    </div>
     <!-- Modal -->
-    <div class="modal fade" id="add-category-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="detailsModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
+                <input type="hidden" id="deleteUserId">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">ADD NEW PRODUCT</h1>
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">USER DETAILS</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                        <div class="row mt-4">
-                            <div class="col-12">
-                                <label>CATEGORY NAME:</label>
-                            </div>
+                    <div class="row mt-2">
+                        <div class="col-12">
+                            <label>EMAIL:</label>
                         </div>
-                        <div class="row mt-2">
-                            <div class="col-12">
-                                <input class="form-control" type="text"
-                                       id="categoryName" placeholder="name of category..."
-                                       required>
-                            </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-12">
+                            <input class="form-control" type="text" id="userEmail" readonly>
                         </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button class="btn btn-primary" data-bs-dismiss="modal" onclick="addCategory()">ADD</button>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-12">
+                            <label>FULL NAME:</label>
                         </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-12">
+                            <input class="form-control" type="text" id="userFullName" readonly>
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-12">
+                            <label>AGE:</label>
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-12">
+                            <input class="form-control" type="text" id="userAge" readonly>
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-12">
+                            <label>ROLES:</label>
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-12">
+                            <input class="form-control" type="text" id="userRoles" readonly>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" onclick="deleteUser()">DELETE</button>
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">OK</button>
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="row">
-        <div class="col-8 mx-auto">
-            <h3 class="text-center">PRODUCT CATEGORIES:</h3>
-            <input type="hidden" id="categoryId">
-            <h3 class="text-center">ADMIN PANEL</h3>
-            <button type="button" class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#add-category-modal">
-                +ADD NEW CATEGORY
-            </button>
-            <table class="table table-striped">
-                <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>NAME</th>
-                    <th>DETAILS</th>
-                </tr>
-                </thead>
-                <tbody id="categoriesTableBody">
-                </tbody>
-            </table>
-        </div>
-    </div>
     <script type="text/javascript">
-        loadCategories();
-        function loadCategories(){
+        loadUsers();
+        function loadUsers(){
             const httpRequest = new XMLHttpRequest();
-            httpRequest.open("GET", "/categories", true);
+            httpRequest.open("GET", "/users", true);
             httpRequest.onreadystatechange = function (){
                 if(httpRequest.readyState == XMLHttpRequest.DONE && httpRequest.status == 200){
 
-                    let categoriesList = JSON.parse(httpRequest.responseText);
-
+                    let userList = JSON.parse(httpRequest.responseText);
 
                     let innerContent = "";
-                    for (let i = 0; i < categoriesList.length; i++) {
-
-                        innerContent += "<tr>";
-                        innerContent += "<td>"+categoriesList[i].id+"</td>";
-                        innerContent += "<td>"+categoriesList[i].name+"</td>";
-                        innerContent += "<td><button class='btn btn-sm btn-danger' " +
-                            "onclick='deleteCategoryModal("+categoriesList[i].id+")'>DELETE</button></td>";
-                        innerContent += "</tr>";
-
-                    }
-                    document.getElementById("categoriesTableBody").innerHTML = innerContent;
+                    for (let i = 0; i < userList.length; i++){
+                        innerContent+="<tr>";
+                        innerContent+="<td>"+userList[i].id+"</td>";
+                        innerContent+="<td>"+userList[i].email+"</td>";
+                        innerContent+="<td>"+userList[i].fullName+"</td>";
+                        innerContent+="<td>"+userList[i].age+" y.o.</td>";
+                        innerContent+="<td><button class='btn btn-sm btn-success' " +
+                            "onclick='openUsersDetailsModal("+userList[i].id+")'>DETAILS</button</td>";
+                        innerContent+="</tr>";          }
+                    document.getElementById("usersTableBody").innerHTML = innerContent;
                 }
             }
             httpRequest.send();
         }
 
-        function addCategory(){
-            const httpRequest = new XMLHttpRequest();
-            httpRequest.open("POST", "/categories", true);
-            httpRequest.setRequestHeader("Content-Type", "application/json");
+        function openUsersDetailsModal(id){
+            detailsModal = new bootstrap.Modal(document.getElementById('detailsModal'));
 
-            let name = document.getElementById("categoryName")
+            const httpRequest = new XMLHttpRequest();
+            httpRequest.open("GET", "/users/"+id, true);
             httpRequest.onreadystatechange = function (){
                 if(httpRequest.readyState == XMLHttpRequest.DONE && httpRequest.status == 200){
-                    name.value = "";
-                    loadCategories();
+                    let result = JSON.parse(httpRequest.responseText);
+                    userEmail.value = result.email;
+                    userFullName.value = result.fullName;
+                    userAge.value = result.age;
+                    deleteUserId.value = result.id;
+
+                    for (let i = 0; i < result.permissionList.length; i++) {
+                        userRoles.value = result.permissionList[i].role;
+                    }
+
+                    detailsModal.show();
                 }
             }
-
-            let body = {
-                'name': name.value,
-            }
-            body = JSON.stringify(body);
-            httpRequest.send(body);
+            httpRequest.send();
         }
 
-        function deleteCategoryModal(id){
-            let approve = confirm('Are you sure?')
+        function deleteUser(){
 
-            if (approve){
-                const httpRequest = new XMLHttpRequest();
-                httpRequest.open("DELETE", "/categories/"+id, true);
-                httpRequest.onreadystatechange = function (){
-                    if(httpRequest.readyState == XMLHttpRequest.DONE && httpRequest.status == 200){
-                        loadCategories();
-                    }
+            let userId = document.getElementById("deleteUserId")
+
+            const httpRequest = new XMLHttpRequest();
+            httpRequest.open("DELETE", "/users/" + userId.value, true);
+
+
+            httpRequest.onreadystatechange = function (){
+                if(httpRequest.readyState == XMLHttpRequest.DONE && httpRequest.status == 200){
+                    detailsModal.hide();
+                    loadUsers();
                 }
-                httpRequest.send();
             }
+            httpRequest.send();
+
         }
     </script>
 </div>
