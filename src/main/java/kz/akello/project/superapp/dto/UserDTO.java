@@ -10,9 +10,10 @@ import java.util.List;
 @Setter
 public class UserDTO {
     private Long id;
-    private int age;
+    private String userName;
     private String email;
-    private String fullName;
     private String password;
+    private int age;
+    private double money;
     private List<Permission> permissionList;
 }

@@ -1,5 +1,7 @@
 package kz.akello.project.superapp.service;
 
+import kz.akello.project.superapp.dto.UserDTO;
+import kz.akello.project.superapp.mapper.UserMapper;
 import kz.akello.project.superapp.model.Permission;
 import kz.akello.project.superapp.model.User;
 import kz.akello.project.superapp.repository.PermissionRepository;
@@ -27,6 +29,9 @@ public class UserService implements UserDetailsService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    @Autowired
+    private UserMapper userMapper;
+
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -38,12 +43,12 @@ public class UserService implements UserDetailsService {
         }
     }
 
-    public List<User> getUsers(){
-        return userRepository.findAll();
+    public List<UserDTO> getUsers(){
+        return userMapper.toDtoList(userRepository.findAll());
     }
 
-    public User getUser(Long id){
-        return userRepository.findById(id).orElse(null);
+    public UserDTO getUser(Long id){
+        return userMapper.toDTO(userRepository.findById(id).orElse(null));
     }
 
     public void deleteUser(Long id){

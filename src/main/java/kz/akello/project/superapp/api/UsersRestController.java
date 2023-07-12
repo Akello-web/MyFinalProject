@@ -1,5 +1,6 @@
 package kz.akello.project.superapp.api;
 
+import kz.akello.project.superapp.dto.UserDTO;
 import kz.akello.project.superapp.model.User;
 import kz.akello.project.superapp.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -15,12 +16,12 @@ public class UsersRestController {
   private final UserService userService;
 
   @GetMapping
-  public List<User> getUsers(){
+  public List<UserDTO> getUsers(){
     return userService.getUsers();
   }
 
   @GetMapping(value = "{id}")
-  public User getUser(@PathVariable(name = "id") Long id){
+  public UserDTO getUser(@PathVariable(name = "id") Long id){
     return userService.getUser(id);
   }
 
