@@ -1,5 +1,6 @@
 package kz.akello.project.superapp.api;
 
+import kz.akello.project.superapp.dto.NewsDTO;
 import kz.akello.project.superapp.model.News;
 import kz.akello.project.superapp.service.NewsService;
 import lombok.RequiredArgsConstructor;
@@ -16,24 +17,24 @@ public class NewsRestController {
   private final NewsService newsService;
 
   @GetMapping
-  public List<News> getNews(){
+  public List<NewsDTO> getNews(){
     return newsService.getNews();
   }
 
   @GetMapping(value = "{id}")
-  public News getNew(@PathVariable("id") Long id){
+  public NewsDTO getNew(@PathVariable("id") Long id){
     return newsService.getNew(id);
   }
 
   @PreAuthorize("isAuthenticated()")
   @PostMapping
-  public News addNews(@RequestBody News news){
+  public NewsDTO addNews(@RequestBody NewsDTO news){
     return newsService.addNews(news);
   }
 
   @PreAuthorize("isAuthenticated()")
   @PutMapping
-  public News updateNews(@RequestBody News news){
+  public NewsDTO updateNews(@RequestBody NewsDTO news){
     return newsService.updateNews(news);
   }
 

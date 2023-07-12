@@ -1,5 +1,7 @@
 package kz.akello.project.superapp.service;
 
+import kz.akello.project.superapp.dto.NewsDTO;
+import kz.akello.project.superapp.mapper.NewsMapper;
 import kz.akello.project.superapp.model.News;
 import kz.akello.project.superapp.repository.NewsRepository;
 import lombok.RequiredArgsConstructor;
@@ -14,28 +16,29 @@ import java.util.List;
 @RequiredArgsConstructor
 public class NewsService {
   private final NewsRepository newsRepository;
-  public List<News> getNews(){
-    return newsRepository.findAllOrderedByDateDesc();
+  private final NewsMapper newsMapper;
+  public List<NewsDTO> getNews(){
+    return newsMapper.toNewsDtoList(newsRepository.findAllOrderedByDateDesc());
   }
 
-  public News getNew(Long id){
-    return newsRepository.findById(id).orElse(null);
+  public NewsDTO getNew(Long id){
+    return newsMapper.toDto(newsRepository.findById(id).orElse(null));
   }
 
-  public News addNews(News news){
+  public NewsDTO addNews(NewsDTO news){
     Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
     String currentUserName = authentication.getName();
     news.setNewsAuthor(currentUserName);
-    news.setPostDate(new Timestamp(System.currentTimeMillis()));
-    return newsRepository.save(news);
+    news.setTimePost(new Timestamp(System.currentTimeMillis()));
+    return newsMapper.toDto(newsRepository.save(newsMapper.fromDto(news)));
   }
 
-  public News updateNews(News news){
+  public NewsDTO updateNews(NewsDTO news){
     Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
     String currentUserName = authentication.getName();
     news.setNewsAuthor(currentUserName);
-    news.setPostDate(new Timestamp(System.currentTimeMillis()));
-    return newsRepository.save(news);
+    news.setTimePost(new Timestamp(System.currentTimeMillis()));
+    return newsMapper.toDto(newsRepository.save(newsMapper.fromDto(news)));
   }
 
   public void deleteNews(Long id){

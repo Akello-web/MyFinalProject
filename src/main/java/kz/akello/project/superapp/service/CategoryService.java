@@ -1,5 +1,7 @@
 package kz.akello.project.superapp.service;
 
+import kz.akello.project.superapp.dto.CategoryDTO;
+import kz.akello.project.superapp.mapper.ProductMapper;
 import kz.akello.project.superapp.model.Category;
 import kz.akello.project.superapp.repository.CategoryRepository;
 import lombok.RequiredArgsConstructor;
@@ -11,21 +13,25 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CategoryService {
   private final CategoryRepository categoryRepository;
+  private final ProductMapper categoryMapper;
 
-  public List<Category> getCategories(){
-    return categoryRepository.findAll();
+  public List<CategoryDTO> getCategories(){
+    return categoryMapper.toCategoryDtoList(categoryRepository.findAll());
   }
 
-  public Category getCategory(Long id){
-    return categoryRepository.findById(id).orElse(null);
+  public CategoryDTO getCategory(Long id){
+
+    return categoryMapper.toDto(categoryRepository.findById(id).orElse(null));
   }
 
-  public Category addCategory(Category category){
-    return categoryRepository.save(category);
+  public CategoryDTO addCategory(CategoryDTO category){
+
+    return categoryMapper.toDto(categoryRepository.save(categoryMapper.fromDto(category)));
   }
 
-  public Category updateCategory(Category category){
-    return categoryRepository.save(category);
+  public CategoryDTO updateCategory(CategoryDTO category){
+
+    return categoryMapper.toDto(categoryRepository.save(categoryMapper.fromDto(category)));
   }
 
   public void deleteCategory(Long id){

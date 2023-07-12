@@ -1,5 +1,6 @@
 package kz.akello.project.superapp.api;
 
+import kz.akello.project.superapp.dto.ProductDTO;
 import kz.akello.project.superapp.model.Product;
 import kz.akello.project.superapp.service.ProductService;
 import lombok.RequiredArgsConstructor;
@@ -15,24 +16,25 @@ public class ProductRestController {
   private final ProductService productService;
 
   @GetMapping
-  public List<Product> productPage(){
+  public List<ProductDTO> productPage(){
     return productService.getProducts();
   }
 
   @PreAuthorize("hasAnyRole('ROLE_SELLER')")
   @PostMapping
-  public Product addProduct(@RequestBody Product product){
+  public ProductDTO addProduct(@RequestBody ProductDTO product){
     return productService.addProduct(product);
   }
 
   @GetMapping(value = "{id}")
-  public Product getProduct(@PathVariable(name = "id") Long id){
+  public ProductDTO getProduct(@PathVariable(name = "id") Long id){
     return productService.getProduct(id);
   }
 
   @PreAuthorize("hasAnyRole('ROLE_SELLER', 'ROLE_ADMIN')")
   @PutMapping
-  public Product updateProduct(@RequestBody Product product){
+  public ProductDTO updateProduct(@RequestBody ProductDTO product){
+
     return productService.updateProduct(product);
   }
 

@@ -1,5 +1,6 @@
 package kz.akello.project.superapp.api;
 
+import kz.akello.project.superapp.dto.CategoryDTO;
 import kz.akello.project.superapp.model.Category;
 import kz.akello.project.superapp.service.CategoryService;
 import lombok.RequiredArgsConstructor;
@@ -15,23 +16,23 @@ public class CategoryRestController {
   private final CategoryService categoryService;
 
   @GetMapping
-  public List<Category> getCategories(){
+  public List<CategoryDTO> getCategories(){
     return categoryService.getCategories();
   }
 
   @GetMapping(value = "{id}")
-  public Category getCategory(@PathVariable(name = "id") Long id){
+  public CategoryDTO getCategory(@PathVariable(name = "id") Long id){
     return categoryService.getCategory(id);
   }
 
   @PostMapping
-  public Category addCategory(@RequestBody Category category){
+  public CategoryDTO addCategory(@RequestBody CategoryDTO category){
     return categoryService.addCategory(category);
   }
 
   @PutMapping
-  public Category updateCategory(Category category){
-    return categoryService.addCategory(category);
+  public CategoryDTO updateCategory(CategoryDTO category){
+    return categoryService.updateCategory(category);
   }
 
   @DeleteMapping(value = "{id}")
