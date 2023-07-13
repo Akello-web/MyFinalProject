@@ -12,7 +12,7 @@
         for (let i = 0; i < productList.length; i++){
           tableContent+="<tr>";
           tableContent+="<td>"+productList[i].id+"</td>";
-          tableContent+="<td>"+productList[i].sellerName+"</td>";
+          tableContent+="<td>"+productList[i].userProduct.fullName+"</td>";
           tableContent+="<td>"+productList[i].name+"</td>";
           tableContent+="<td>"+productList[i].price+"$</td>";
           tableContent+="<td><button class='btn btn-sm btn-success' " +
@@ -55,8 +55,7 @@
               let footerContent = "";
 
               if(currentUserEmail.value === result.userProduct.email){
-                  footerContent += "<button type='button' class='btn btn-danger' onclick='deleteProduct()'>DELETE</button>"
-                  footerContent += "<button type='button' class='btn btn-primary' onclick='updateProduct()'>SAVE</button>"
+                  footerContent += "<p>YOUR PRODUCT</p>"
               }else{
                   footerContent += "<button type='button' class='btn btn-secondary' data-bs-dismiss='modal'>Close</button>"
                   footerContent += "<button type='button' class='btn btn-primary'>BUY</button>"
@@ -81,7 +80,8 @@
         let result = JSON.parse(httpRequest.responseText);
 
         productId.value = result.id;
-        sellerNameDetails.value = result.sellerName;
+        userId.value = result.userProduct.id;
+        sellerNameDetails.value = result.userProduct.fullName;
         categoryDetails.value = result.category.name;
         productNameDetails.value = result.name;
         descriptionDetails.value = result.description;
@@ -98,7 +98,6 @@
     httpRequest.open("POST", "/products", true);
     httpRequest.setRequestHeader("Content-Type", "application/json");
 
-    let sellerName = document.getElementById("sellerName")
     let productName = document.getElementById("productName")
     let productDescription = document.getElementById("productDescription")
     let productPrice = document.getElementById("productPrice")
@@ -106,17 +105,14 @@
 
     httpRequest.onreadystatechange = function (){
       if(httpRequest.readyState == XMLHttpRequest.DONE && httpRequest.status == 200){
-          sellerName.value = "";
           productName.value = "";
           productDescription.value = "";
           productPrice.value = "";
-          productCategory.value = "";
         loadProducts();
       }
     }
 
     let body = {
-      'sellerName': sellerName.value,
       'name': productName.value,
       'description': productDescription.value,
       'price': productPrice.value,
@@ -135,7 +131,7 @@
     httpRequest.setRequestHeader("Content-Type", "application/json");
 
     let productId = document.getElementById("productId")
-    let sellerName = document.getElementById("sellerNameDetails")
+    let userId = document.getElementById("userId")
     let productName = document.getElementById("productNameDetails")
     let productDescription = document.getElementById("descriptionDetails")
     let productPrice = document.getElementById("priceDetails")
@@ -148,16 +144,19 @@
       }
     }
 
+    console.log(userId.value)
+
     let body = {
       'id': productId.value,
-      'sellerName': sellerName.value,
       'name': productName.value,
       'description': productDescription.value,
       'price': productPrice.value,
       "category": {
-        "id": productCategory.value,
-        "name": "SOMETHING"
-      }
+        "id": productCategory.value
+      },
+        "userProduct": {
+            "id": userId.value
+        }
     }
     body = JSON.stringify(body);
     httpRequest.send(body);

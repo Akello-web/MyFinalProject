@@ -8,6 +8,7 @@
     <input type="hidden" id="currentUserEmail" th:value="${#authentication.name}">
   </div>
   <input type="hidden" id="productId">
+  <input type="hidden" id="userId">
   <div class="row">
     <div class="col-9 mx-auto">
       <h2 class="text-center">AQYL MARKET</h2>
@@ -31,7 +32,6 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
               <div class="modal-body" sec:authorize="isAuthenticated()">
-                <input type="hidden" id="sellerName" th:value="${#authentication.principal.fullName}">
                 <input type="hidden" id="currentUser">
                 <div class="row mt-2">
                   <div class="col-12">
@@ -101,7 +101,6 @@
       <div class="modal fade" id="detailsModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
           <div class="modal-content">
-
             <div class="modal-header">
               <h1 class="modal-title fs-5" id="exampleModalLabel">PRODUCT DETAILS</h1>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>

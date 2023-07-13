@@ -1,7 +1,6 @@
 package kz.akello.project.superapp.api;
 
 import kz.akello.project.superapp.dto.ProductDTO;
-import kz.akello.project.superapp.model.Product;
 import kz.akello.project.superapp.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -31,7 +30,7 @@ public class ProductRestController {
     return productService.getProduct(id);
   }
 
-  @PreAuthorize("hasAnyRole('ROLE_SELLER', 'ROLE_ADMIN')")
+//  @PreAuthorize("hasAnyRole('ROLE_SELLER', 'ROLE_ADMIN')")
   @PutMapping
   public ProductDTO updateProduct(@RequestBody ProductDTO product){
 

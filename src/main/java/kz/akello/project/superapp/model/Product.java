@@ -12,8 +12,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class Product extends BaseModel{
-  @Column(name = "seller_name")
-  private String sellerName;
 
   @Column(name = "product_name")
   private String name;
