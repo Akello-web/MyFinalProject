@@ -68,7 +68,7 @@
                     </div>
                     <div class="row mt-2">
                         <div class="col-12">
-                            <input class="form-control" type="text" id="userRoles" readonly>
+                            <select class="form-control" id="userRoles" readonly></select>
                         </div>
                     </div>
                 </div>
@@ -76,6 +76,47 @@
                 <div class="modal-footer">
                     <button type="button" id="deleteButton" class="btn btn-danger" onclick="deleteUser()">DELETE</button>
                     <button type="button" class="btn btn-primary" data-bs-dismiss="modal">OK</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal modal-sm fade" id="rolesDetailsModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="modalLabelExample">USER ROLE</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+
+                <div class="modal-body">
+                    <div class="row mt-2">
+                        <div class="col-12">
+                            <label>USER:</label>
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-12">
+                            <input class="form-control" type="text" id="userName" readonly>
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-12">
+                            <label>ROLES:</label>
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-12">
+                            <select class="form-control" id="giveUserRoles"></select>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">CANCEL</button>
+                    <button type="button" class="btn btn-primary">GIVE</button>
                 </div>
             </div>
         </div>
@@ -98,9 +139,12 @@
                         innerContent+="<td>"+userList[i].email+"</td>";
                         innerContent+="<td>"+userList[i].fullName+"</td>";
                         innerContent+="<td>"+userList[i].age+" y.o.</td>";
-                        innerContent+="<td><button class='btn btn-sm btn-success' " +
-                            "onclick='openUsersDetailsModal("+userList[i].id+")'>DETAILS</button</td>";
-                        innerContent+="</tr>";          }
+                        innerContent+="<td><a class='dropdown-toggle btn btn-sm btn-success' data-bs-toggle='dropdown' " +
+                            "role='button' aria-expanded='false'>DETAILS</a>";
+                        innerContent+="<ul class='dropdown-menu'>";
+                        innerContent+="<li><a class='dropdown-item' href='#' onclick='openUsersDetailsModal("+userList[i].id+")'>DETAILS</a></li>";
+                        innerContent+="<li><a class='dropdown-item' href='#' onclick='openUsersRolesModal("+userList[i].id+")'>GIVE ROLE</a></li>";
+                        innerContent+="</ul></td></tr>";          }
                     document.getElementById("usersTableBody").innerHTML = innerContent;
                 }
             }
@@ -121,9 +165,11 @@
                     userAge.value = result.age;
                     deleteUserId.value = result.id;
 
-                    for (let i = 0; i < result.permissionList.length; i++) {
-                        userRoles.value = result.permissionList[i].role;
+                    let innerSelectRoles = "";
+                    for (let i = result.permissionList.length - 1; i >= 0 ; i--) {
+                        innerSelectRoles += "<option>"+result.permissionList[i].role+"</option>"
                     }
+                    document.getElementById("userRoles").innerHTML = innerSelectRoles;
 
                     let deleteButton = document.getElementById("deleteButton");
                     if(currentUserName.value === result.email){
@@ -133,6 +179,28 @@
                     }
 
                     detailsModal.show();
+                }
+            }
+            httpRequest.send();
+        }
+
+        function openUsersRolesModal(id){
+            rolesDetailsModal = new bootstrap.Modal(document.getElementById('rolesDetailsModal'));
+
+            const httpRequest = new XMLHttpRequest();
+            httpRequest.open("GET", "/users/"+id, true);
+            httpRequest.onreadystatechange = function (){
+                if(httpRequest.readyState == XMLHttpRequest.DONE && httpRequest.status == 200){
+                    let result = JSON.parse(httpRequest.responseText);
+                    userName.value = result.fullName;
+
+                    let innerSelectRoles = "";
+                    for (let i = 0; i < result.permissionList.length; i++) {
+                        innerSelectRoles += "<option>"+result.permissionList[i].role+"</option>"
+                    }
+                    document.getElementById("giveUserRoles").innerHTML = innerSelectRoles;
+
+                    rolesDetailsModal.show();
                 }
             }
             httpRequest.send();
