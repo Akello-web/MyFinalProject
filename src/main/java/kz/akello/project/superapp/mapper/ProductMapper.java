@@ -12,21 +12,18 @@ import java.util.List;
 @Mapper(componentModel = "spring")
 public interface ProductMapper {
   @Mapping(source = "category", target = "category")
-  @Mapping(source = "sellerName", target = "nameSeller")
   ProductDTO toDto(Product product);
 
-  @Mapping(source = "nameSeller", target = "sellerName")
+  @Mapping(source = "category", target = "category")
   Product fromDto(ProductDTO productDTO);
 
   List<ProductDTO> toProductDtoList(List<Product> courseList);
   List<Product> toProductModelList(List<ProductDTO> coursesDTO);
 
   @Mapping(source = "id", target = "id")
-  @Mapping(source = "name", target = "categoryName")
   CategoryDTO toDto(Category category);
 
   @Mapping(source = "id", target = "id")
-  @Mapping(source = "categoryName", target = "name")
   Category fromDto(CategoryDTO categoryDTO);
 
   List<CategoryDTO> toCategoryDtoList(List<Category> courseList);

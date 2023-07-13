@@ -29,7 +29,7 @@ public class NewsService {
     Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
     String currentUserName = authentication.getName();
     news.setNewsAuthor(currentUserName);
-    news.setTimePost(new Timestamp(System.currentTimeMillis()));
+    news.setPostDate(new Timestamp(System.currentTimeMillis()));
     return newsMapper.toDto(newsRepository.save(newsMapper.fromDto(news)));
   }
 
@@ -37,7 +37,7 @@ public class NewsService {
     Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
     String currentUserName = authentication.getName();
     news.setNewsAuthor(currentUserName);
-    news.setTimePost(new Timestamp(System.currentTimeMillis()));
+    news.setPostDate(new Timestamp(System.currentTimeMillis()));
     return newsMapper.toDto(newsRepository.save(newsMapper.fromDto(news)));
   }
 

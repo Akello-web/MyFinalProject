@@ -5,6 +5,7 @@ import lombok.Setter;
 
 import java.sql.Timestamp;
 
+
 @Getter
 @Setter
 public class NewsDTO {
@@ -12,5 +13,5 @@ public class NewsDTO {
   private String newsAuthor;
   private String title;
   private String description;
-  private Timestamp timePost;
+  private Timestamp postDate;
 }
