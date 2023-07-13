@@ -43,9 +43,34 @@
     httpRequest.send();
   }
 
+
+  function emailsComparison(id){
+      const httpRequest = new XMLHttpRequest();
+      httpRequest.open("GET", "/products/"+id, true);
+      httpRequest.onreadystatechange = function (){
+          if(httpRequest.readyState == XMLHttpRequest.DONE && httpRequest.status == 200){
+              let result = JSON.parse(httpRequest.responseText);
+              let currentUserEmail = document.getElementById("currentUserEmail");
+
+              let footerContent = "";
+
+              if(currentUserEmail.value === result.userProduct.email){
+                  footerContent += "<button type='button' class='btn btn-danger' onclick='deleteProduct()'>DELETE</button>"
+                  footerContent += "<button type='button' class='btn btn-primary' onclick='updateProduct()'>SAVE</button>"
+              }else{
+                  footerContent += "<button type='button' class='btn btn-secondary' data-bs-dismiss='modal'>Close</button>"
+                  footerContent += "<button type='button' class='btn btn-primary'>BUY</button>"
+              }
+              document.getElementById("modal-footer").innerHTML = footerContent;
+
+          }
+      }
+      httpRequest.send();
+  }
+
   function openProductDetailsModel(id){
     categoriesInput();
-    currenNameAndSellerName(id);
+    emailsComparison(id);
 
     detailsModal = new bootstrap.Modal(document.getElementById('detailsModal'));
 
@@ -55,13 +80,6 @@
       if(httpRequest.readyState == XMLHttpRequest.DONE && httpRequest.status == 200){
         let result = JSON.parse(httpRequest.responseText);
 
-        let productId = document.getElementById("productId")
-        let sellerNameDetails = document.getElementById("sellerNameDetails")
-        let categoryDetails = document.getElementById("categoryDetails")
-        let productNameDetails = document.getElementById("productNameDetails")
-        let descriptionDetails = document.getElementById("descriptionDetails")
-        let priceDetails = document.getElementById("priceDetails")
-
         productId.value = result.id;
         sellerNameDetails.value = result.sellerName;
         categoryDetails.value = result.category.name;
@@ -69,7 +87,7 @@
         descriptionDetails.value = result.description;
         priceDetails.value = result.price;
 
-        detailsModal.show();
+          detailsModal.show();
       }
     }
     httpRequest.send();
@@ -164,29 +182,6 @@
       }
       httpRequest.send();
     }
-  }
-
-  function currenNameAndSellerName(id){
-      const httpRequest = new XMLHttpRequest();
-      httpRequest.open("GET", "/products/"+id, true);
-      httpRequest.onreadystatechange = function (){
-          if(httpRequest.readyState == XMLHttpRequest.DONE && httpRequest.status == 200){
-              let result = JSON.parse(httpRequest.responseText);
-              let currentUserName = document.getElementById("currentUserName");
-
-              let footerContent = ""
-
-              if(currentUserName.value === result.sellerName){
-                  footerContent += "<p>THIS IS YOUR PRODUCT!!!</p>"
-              }else{
-                  footerContent += "<button type='button' class='btn btn-secondary' data-bs-dismiss='modal'>Close</button>"
-                  footerContent += "<button type='button' class='btn btn-primary'>BUY</button>"
-              }
-              document.getElementById("modal-footer").innerHTML = footerContent;
-
-          }
-      }
-      httpRequest.send();
   }
 
 </script>

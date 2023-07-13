@@ -3,7 +3,6 @@ package kz.akello.project.superapp.mapper;
 import kz.akello.project.superapp.dto.UserDTO;
 import kz.akello.project.superapp.model.User;
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 
 import java.util.List;

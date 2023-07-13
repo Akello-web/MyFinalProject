@@ -4,16 +4,18 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="layoutPage.html">
 
 <div layout:fragment="content">
-  <input type="hidden" id="productId">
   <div sec:authorize="isAuthenticated()">
-    <input type="hidden" id="currentUserName" th:value="${#authentication.principal.fullName}">
+    <input type="hidden" id="currentUserEmail" th:value="${#authentication.name}">
   </div>
+  <input type="hidden" id="productId">
   <div class="row">
     <div class="col-9 mx-auto">
       <h2 class="text-center">AQYL MARKET</h2>
-      <div sec:authorize="hasAnyRole('ROLE_SELLER')">
+
         <div class="d-flex justify-content-between">
-          <button type="button" class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#addProductModal"
+          <button type="button" class="btn btn-sm btn-outline-secondary"
+                  data-bs-toggle="modal" data-bs-target="#addProductModal"
+                  sec:authorize="hasAnyRole('ROLE_SELLER')"
                   onclick="categoriesInput()">
             +ADD PRODUCT
           </button>
@@ -29,7 +31,8 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
               <div class="modal-body" sec:authorize="isAuthenticated()">
-                <input class="form-control" type="hidden" id="sellerName" th:value="${#authentication.principal.fullName}">
+                <input type="hidden" id="sellerName" th:value="${#authentication.principal.fullName}">
+                <input type="hidden" id="currentUser">
                 <div class="row mt-2">
                   <div class="col-12">
                     <label>CATEGORY:</label>
@@ -79,7 +82,6 @@
             </div>
           </div>
         </div>
-      </div>
 
       <table class="table table-striped">
         <thead>

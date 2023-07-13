@@ -12,4 +12,5 @@ public class ProductDTO {
   private String description;
   private double price;
   private CategoryDTO category;
+  private UserDTO userProduct;
 }

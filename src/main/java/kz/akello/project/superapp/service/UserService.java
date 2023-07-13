@@ -117,4 +117,15 @@ public class UserService implements UserDetailsService {
         return null;
     }
 
+    public UserDTO getCurrentSessionUserDTO(){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if(!(authentication instanceof AnonymousAuthenticationToken)){
+            UserDTO user = (UserDTO) authentication.getPrincipal();
+            if(user != null){
+                return user;
+            }
+        }
+        return null;
+    }
+
 }
