@@ -22,6 +22,9 @@ public class Product extends BaseModel{
   @Column(name = "product_price")
   private double price;
 
+  @Column(name = "product_handled")
+  private boolean handled;
+
   @ManyToOne
   private User userProduct;
 

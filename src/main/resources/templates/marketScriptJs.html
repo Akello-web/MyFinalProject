@@ -10,14 +10,17 @@
 
         let tableContent = "";
         for (let i = 0; i < productList.length; i++){
-          tableContent+="<tr>";
-          tableContent+="<td>"+productList[i].id+"</td>";
-          tableContent+="<td>"+productList[i].userProduct.fullName+"</td>";
-          tableContent+="<td>"+productList[i].name+"</td>";
-          tableContent+="<td>"+productList[i].price+"$</td>";
-          tableContent+="<td><button class='btn btn-sm btn-success' " +
-                  "onclick='openProductDetailsModel("+productList[i].id+")'>DETAILS</button</td>";
-          tableContent+="</tr>";          }
+            if (productList[i].handled){
+                tableContent+="<tr>";
+                tableContent+="<td>"+productList[i].id+"</td>";
+                tableContent+="<td>"+productList[i].userProduct.fullName+"</td>";
+                tableContent+="<td>"+productList[i].name+"</td>";
+                tableContent+="<td>"+productList[i].price+"$</td>";
+                tableContent+="<td><button class='btn btn-sm btn-success' " +
+                    "onclick='openProductDetailsModel("+productList[i].id+")'>DETAILS</button</td>";
+                tableContent+="</tr>";
+            }
+        }
         document.getElementById("productTableBody").innerHTML = tableContent;
       }
     }

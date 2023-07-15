@@ -3,6 +3,7 @@ package kz.akello.project.superapp.api;
 import kz.akello.project.superapp.dto.CommentDTO;
 import kz.akello.project.superapp.service.CommentService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,16 +24,19 @@ public class CommentRestController {
     return commentService.getComment(id);
   }
 
+  @PreAuthorize("isAuthenticated()")
   @PostMapping
   public CommentDTO addComment(@RequestBody CommentDTO comment){
     return commentService.addComment(comment);
   }
 
+  @PreAuthorize("isAuthenticated()")
   @PutMapping
   public CommentDTO updateComment(@RequestBody CommentDTO comment){
     return commentService.updateComment(comment);
   }
 
+  @PreAuthorize("isAuthenticated()")
   @DeleteMapping(value = "{id}")
   public void deleteComment(@PathVariable(name = "id") Long id){
     commentService.deleteComment(id);

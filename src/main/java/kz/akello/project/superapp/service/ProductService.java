@@ -22,8 +22,14 @@ public class ProductService {
   }
 
   public ProductDTO addProduct(ProductDTO product){
+    product.setHandled(false);
     product.setUserProduct(userMapper.toDTO(userService.getCurrentSessionUser()));
     return productMapper.toDto(productRepository.save(productMapper.fromDto(product)));
+  }
+
+  public void handledApp(ProductDTO product){
+    product.setHandled(true);
+    productMapper.toDto(productRepository.save(productMapper.fromDto(product)));
   }
 
   public ProductDTO getProduct(Long id){

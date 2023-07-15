@@ -29,6 +29,10 @@ public class HomeController {
     public String productPage(){
         return "marketPage";
     }
+    @GetMapping(value = "/product-request-page")
+    public String productRequestPage(){
+        return "requestsPage";
+    }
 
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     @GetMapping(value = "/admin-panel")

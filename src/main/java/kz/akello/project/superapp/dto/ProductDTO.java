@@ -10,6 +10,7 @@ public class ProductDTO {
   private String name;
   private String description;
   private double price;
+  private boolean handled;
   private CategoryDTO category;
   private UserDTO userProduct;
 }

@@ -19,7 +19,7 @@ public class ProductRestController {
     return productService.getProducts();
   }
 
-  @PreAuthorize("hasAnyRole('ROLE_SELLER')")
+//  @PreAuthorize("hasAnyRole('ROLE_SELLER')")
   @PostMapping
   public ProductDTO addProduct(@RequestBody ProductDTO product){
     return productService.addProduct(product);
