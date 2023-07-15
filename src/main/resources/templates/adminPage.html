@@ -91,6 +91,11 @@
                 </div>
 
                 <div class="modal-body">
+                    <input type="hidden" id="userId">
+                    <input type="hidden" id="email">
+                    <input type="hidden" id="age">
+                    <input type="hidden" id="money">
+                    <input type="hidden" id="password">
                     <div class="row mt-2">
                         <div class="col-12">
                             <label>USER:</label>
@@ -108,7 +113,20 @@
                     </div>
                     <div class="row mt-2">
                         <div class="col-12">
-                            <select class="form-control" id="giveUserRoles"></select>
+                            <ul class="list-group">
+                                <li class="list-group-item">
+                                    <input class="form-check-input me-1" type="radio" name="listGroupRadio" value="" id="userRadio" checked>
+                                    <label class="form-check-label" for="userRadio">USER</label>
+                                </li>
+                                <li class="list-group-item">
+                                    <input class="form-check-input me-1" type="radio" name="listGroupRadio" value="" id="sellerRadio">
+                                    <label class="form-check-label" for="sellerRadio">SELLER</label>
+                                </li>
+                                <li class="list-group-item">
+                                    <input class="form-check-input me-1" type="radio" name="listGroupRadio" value="" id="adminRadio">
+                                    <label class="form-check-label" for="adminRadio">ADMIN</label>
+                                </li>
+                            </ul>
                         </div>
                     </div>
 
@@ -116,7 +134,8 @@
 
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">CANCEL</button>
-                    <button type="button" class="btn btn-primary">GIVE</button>
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
+                            onclick="changeUserRoles()">GIVE</button>
                 </div>
             </div>
         </div>
@@ -139,12 +158,12 @@
                         innerContent+="<td>"+userList[i].email+"</td>";
                         innerContent+="<td>"+userList[i].fullName+"</td>";
                         innerContent+="<td>"+userList[i].age+" y.o.</td>";
-                        innerContent+="<td><a class='dropdown-toggle btn btn-sm btn-success' data-bs-toggle='dropdown' " +
-                            "role='button' aria-expanded='false'>DETAILS</a>";
+                        innerContent+="<td><div class='btn-group dropend'><a class='dropdown-toggle btn btn-sm btn-success' data-bs-toggle='dropdown' " +
+                            "role='button' aria-expanded='false'>MORE</a>";
                         innerContent+="<ul class='dropdown-menu'>";
                         innerContent+="<li><a class='dropdown-item' href='#' onclick='openUsersDetailsModal("+userList[i].id+")'>DETAILS</a></li>";
                         innerContent+="<li><a class='dropdown-item' href='#' onclick='openUsersRolesModal("+userList[i].id+")'>GIVE ROLE</a></li>";
-                        innerContent+="</ul></td></tr>";          }
+                        innerContent+="</ul></div></td></tr>";          }
                     document.getElementById("usersTableBody").innerHTML = innerContent;
                 }
             }
@@ -192,13 +211,13 @@
             httpRequest.onreadystatechange = function (){
                 if(httpRequest.readyState == XMLHttpRequest.DONE && httpRequest.status == 200){
                     let result = JSON.parse(httpRequest.responseText);
-                    userName.value = result.fullName;
 
-                    let innerSelectRoles = "";
-                    for (let i = 0; i < result.permissionList.length; i++) {
-                        innerSelectRoles += "<option>"+result.permissionList[i].role+"</option>"
-                    }
-                    document.getElementById("giveUserRoles").innerHTML = innerSelectRoles;
+                    userId.value = result.id;
+                    userName.value = result.fullName;
+                    email.value = result.email;
+                    age.value = result.age;
+                    money.value = result.money;
+                    password.value = result.password;
 
                     rolesDetailsModal.show();
                 }
@@ -206,21 +225,107 @@
             httpRequest.send();
         }
 
-        function deleteUser(){
-
-            let userId = document.getElementById("deleteUserId")
-
+        function changeUserRoles(){
             const httpRequest = new XMLHttpRequest();
-            httpRequest.open("DELETE", "/users/" + userId.value, true);
+            httpRequest.open("PUT", "/users", true);
+            httpRequest.setRequestHeader("Content-Type", "application/json");
+
+            let userId = document.getElementById("userId")
+            let userName = document.getElementById("userName")
+            let email = document.getElementById("email")
+            let age = document.getElementById("age")
+            let money = document.getElementById("money")
+            let password = document.getElementById("password")
+
+            let userRadio = document.getElementById("userRadio");
+            let sellerRadio = document.getElementById("sellerRadio");
+            let adminRadio = document.getElementById("adminRadio");
+
+            if (userRadio.checked) {
+                let body = {
+                    "id": userId.value,
+                    "fullName": userName.value,
+                    "email": email.value,
+                    "password": password.value,
+                    "age": age.value,
+                    "money": money.value,
+                    "permissionList": [
+                        {
+                            "id": 1
+                        }
+                    ]
+                }
+                body = JSON.stringify(body);
+                httpRequest.send(body);
+            } else if (sellerRadio.checked) {
+                let body = {
+                    "id": userId.value,
+                    "fullName": userName.value,
+                    "email": email.value,
+                    "password": password.value,
+                    "age": age.value,
+                    "money": money.value,
+                    "permissionList": [
+                        {
+                            "id": 1
+                        },
+                        {
+                            "id": 2
+                        }
+                    ]
+                }
+                body = JSON.stringify(body);
+                httpRequest.send(body);
+            } else if (adminRadio.checked) {
+                let body = {
+                    "id": userId.value,
+                    "fullName": userName.value,
+                    "email": email.value,
+                    "password": password.value,
+                    "age": age.value,
+                    "money": money.value,
+                    "permissionList": [
+                        {
+                            "id": 1
+                        },
+                        {
+                            "id": 2
+                        },
+                        {
+                            "id": 3
+                        }
+                    ]
+                }
+                body = JSON.stringify(body);
+                httpRequest.send(body);
+            }
 
 
             httpRequest.onreadystatechange = function (){
                 if(httpRequest.readyState == XMLHttpRequest.DONE && httpRequest.status == 200){
-                    detailsModal.hide();
+
                     loadUsers();
                 }
             }
-            httpRequest.send();
+        }
+
+        function deleteUser(){
+
+            let userId = document.getElementById("deleteUserId")
+            let approve = confirm('Are you sure?')
+
+            if (approve){
+                const httpRequest = new XMLHttpRequest();
+                httpRequest.open("DELETE", "/users/" + userId.value, true);
+
+                httpRequest.onreadystatechange = function (){
+                    if(httpRequest.readyState == XMLHttpRequest.DONE && httpRequest.status == 200){
+                        detailsModal.hide();
+                        loadUsers();
+                    }
+                }
+                httpRequest.send();
+            }
 
         }
     </script>

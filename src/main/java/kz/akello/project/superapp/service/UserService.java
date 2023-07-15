@@ -51,6 +51,10 @@ public class UserService implements UserDetailsService {
         return userMapper.toDTO(userRepository.findById(id).orElse(null));
     }
 
+    public UserDTO updateUser(UserDTO user){
+        return userMapper.toDTO(userRepository.save(userMapper.toModel(user)));
+    }
+
     public void deleteUser(Long id){
         userRepository.deleteById(id);
     }

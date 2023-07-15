@@ -4,7 +4,7 @@
         const httpRequest = new XMLHttpRequest();
         httpRequest.open("GET", "/news", true);
         httpRequest.onreadystatechange = function (){
-            if(httpRequest.readyState == XMLHttpRequest.DONE && httpRequest.status == 200){
+            if(httpRequest.readyState === XMLHttpRequest.DONE && httpRequest.status === 200){
 
                 let newsList = JSON.parse(httpRequest.responseText);
 
@@ -47,7 +47,7 @@
         let description = document.getElementById("description")
 
         httpRequest.onreadystatechange = function (){
-            if(httpRequest.readyState == XMLHttpRequest.DONE && httpRequest.status == 200){
+            if(httpRequest.readyState === XMLHttpRequest.DONE && httpRequest.status === 200){
                 title.value = "";
                 description.value = "";
                 loadNews();
@@ -71,12 +71,10 @@
         httpRequest.onreadystatechange = function (){
             if(httpRequest.readyState === XMLHttpRequest.DONE && httpRequest.status === 200){
                 let currencyList = JSON.parse(httpRequest.responseText);
-                let miniTableContent = "" +
-                    "<tr><td>EUR</td><td>"+currencyList.EUR+"</td></tr>" +
-                    "<tr><td>RUB</td><td>"+currencyList.RUB+"</td></tr>" +
-                    "<tr><td>KZT</td><td>"+currencyList.KZT+"</td></tr>";
-
-                document.getElementById("cardBodyExchange").innerHTML = miniTableContent;
+                document.getElementById("cardBodyExchange").innerHTML = "" +
+                    "<tr><td>EUR</td><td>" + currencyList.EUR + "</td></tr>" +
+                    "<tr><td>RUB</td><td>" + currencyList.RUB + "</td></tr>" +
+                    "<tr><td>KZT</td><td>" + currencyList.KZT + "</td></tr>";
             }
         }
         httpRequest.send();
@@ -89,13 +87,11 @@
         httpRequest.onreadystatechange = function (){
             if(httpRequest.readyState === XMLHttpRequest.DONE && httpRequest.status === 200){
                 let weatherList = JSON.parse(httpRequest.responseText);
-                let miniTableContent = "" +
-                    "<tr><td>In celsius:</td><td>"+weatherList.current.temp_c+"C</td></tr>" +
-                    "<tr><td>In fahrenheit:</td><td>"+weatherList.current.temp_f+"F</td></tr>" +
-                    "<tr><td>Wind:</td><td>"+weatherList.current.wind_kph+" kph</td></tr>" +
-                    "<tr><td>Updated:</td><td>"+weatherList.current.last_updated+"</td></tr>";
-
-                document.getElementById("cardWeatherBody").innerHTML = miniTableContent;
+                document.getElementById("cardWeatherBody").innerHTML = "" +
+                    "<tr><td>In celsius:</td><td>" + weatherList.current.temp_c + "C</td></tr>" +
+                    "<tr><td>In fahrenheit:</td><td>" + weatherList.current.temp_f + "F</td></tr>" +
+                    "<tr><td>Wind:</td><td>" + weatherList.current.wind_kph + " kph</td></tr>" +
+                    "<tr><td>Updated:</td><td>" + weatherList.current.last_updated + "</td></tr>";
             }
         }
         httpRequest.send();

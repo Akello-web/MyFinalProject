@@ -101,7 +101,7 @@ public class HomeController {
                 user.setMoney(money);
                 user.setPassword(password);
                 if(checkBox!=null){
-                    if(userAge >= 21){
+                    if(userAge >= 18){
                         user.setMoney(150);
                         User newUser = userService.addSeller(user);
                         if(newUser!=null){

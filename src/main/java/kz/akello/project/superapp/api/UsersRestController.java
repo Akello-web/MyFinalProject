@@ -25,7 +25,13 @@ public class UsersRestController {
     return userService.getUser(id);
   }
 
-//  @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+  @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+  @PutMapping
+  public UserDTO giveRole(@RequestBody UserDTO user){
+    return userService.updateUser(user);
+  }
+
+  @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
   @DeleteMapping("{id}")
   public void deleteUser(@PathVariable(name = "id") Long id){
     userService.deleteUser(id);
