@@ -1,7 +1,6 @@
 package kz.akello.project.superapp.api;
 
 import kz.akello.project.superapp.dto.NewsDTO;
-import kz.akello.project.superapp.model.News;
 import kz.akello.project.superapp.service.NewsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;

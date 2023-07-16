@@ -19,7 +19,7 @@ public class ProductRestController {
     return productService.getProducts();
   }
 
-//  @PreAuthorize("hasAnyRole('ROLE_SELLER')")
+  @PreAuthorize("hasAnyRole('ROLE_SELLER')")
   @PostMapping
   public ProductDTO addProduct(@RequestBody ProductDTO product){
     return productService.addProduct(product);
@@ -30,7 +30,7 @@ public class ProductRestController {
     return productService.getProduct(id);
   }
 
-//  @PreAuthorize("hasAnyRole('ROLE_SELLER', 'ROLE_ADMIN')")
+  @PreAuthorize("hasAnyRole('ROLE_SELLER', 'ROLE_ADMIN')")
   @PutMapping
   public ProductDTO updateProduct(@RequestBody ProductDTO product){
 

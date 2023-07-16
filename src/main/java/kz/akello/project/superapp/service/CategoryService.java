@@ -2,7 +2,6 @@ package kz.akello.project.superapp.service;
 
 import kz.akello.project.superapp.dto.CategoryDTO;
 import kz.akello.project.superapp.mapper.ProductMapper;
-import kz.akello.project.superapp.model.Category;
 import kz.akello.project.superapp.repository.CategoryRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

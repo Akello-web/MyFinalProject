@@ -1,7 +1,6 @@
 package kz.akello.project.superapp.api;
 
 import kz.akello.project.superapp.dto.CategoryDTO;
-import kz.akello.project.superapp.model.Category;
 import kz.akello.project.superapp.service.CategoryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;

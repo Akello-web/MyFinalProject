@@ -1,7 +1,6 @@
 package kz.akello.project.superapp.api;
 
 import kz.akello.project.superapp.dto.UserDTO;
-import kz.akello.project.superapp.model.User;
 import kz.akello.project.superapp.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;

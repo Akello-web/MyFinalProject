@@ -9,8 +9,6 @@ public class WeatherData {
   private Location location;
   private CurrentWeather current;
 
-  // Nested classes representing location and current weather data
-
   @Getter
   @Setter
   public static class Location {
