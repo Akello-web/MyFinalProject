@@ -26,7 +26,7 @@ public class NewsService {
 
   public NewsDTO addNews(NewsDTO news){
     Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-    String currentUserName = authentication.getName();
+    String currentUserName = authentication != null ? authentication.getName() : "Anonymous";
     news.setNewsAuthor(currentUserName);
     news.setPostDate(new Timestamp(System.currentTimeMillis()));
     return newsMapper.toDto(newsRepository.save(newsMapper.fromDto(news)));
