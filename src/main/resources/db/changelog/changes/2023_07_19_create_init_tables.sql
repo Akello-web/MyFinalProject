@@ -67,17 +67,17 @@ ALTER TABLE t_users_permission_list
             REFERENCES t_permissions (id)
             ON DELETE CASCADE;
 
-# ALTER TABLE t_comments
-#     ADD CONSTRAINT fk_comments_news
-#         FOREIGN KEY (news_id) REFERENCES t_news(id)
-#             ON DELETE CASCADE;
-#
-# ALTER TABLE t_products
-#     ADD CONSTRAINT fk_products_categories
-#         FOREIGN KEY (category_id) REFERENCES t_categories(id)
-#             ON DELETE CASCADE;
-#
-# ALTER TABLE t_products
-#     ADD CONSTRAINT fk_products_users
-#         FOREIGN KEY (user_product_id) REFERENCES t_users(id)
-#             ON DELETE CASCADE;
+ALTER TABLE t_comments
+    ADD CONSTRAINT fk_comments_news
+        FOREIGN KEY (news_id) REFERENCES t_news(id)
+            ON DELETE CASCADE;
+
+ALTER TABLE t_products
+    ADD CONSTRAINT fk_products_categories
+        FOREIGN KEY (category_id) REFERENCES t_categories(id)
+            ON DELETE CASCADE;
+
+ALTER TABLE t_products
+    ADD CONSTRAINT fk_products_users
+        FOREIGN KEY (user_product_id) REFERENCES t_users(id)
+            ON DELETE CASCADE;
