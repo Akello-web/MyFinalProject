@@ -106,12 +106,15 @@
     let productPrice = document.getElementById("productPrice")
     let productCategory = document.getElementById("productCategory")
 
+    let alertElement = document.getElementById("reviewAlert")
+
     httpRequest.onreadystatechange = function (){
       if(httpRequest.readyState == XMLHttpRequest.DONE && httpRequest.status == 200){
           productName.value = "";
           productDescription.value = "";
           productPrice.value = "";
-        loadProducts();
+          loadProducts();
+          alertElement.classList.remove('d-none');
       }
     }
 
