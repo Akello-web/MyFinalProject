@@ -27,11 +27,6 @@ public class ProductService {
     return productMapper.toDto(productRepository.save(productMapper.fromDto(product)));
   }
 
-  public void handledApp(ProductDTO product){
-    product.setHandled(true);
-    productMapper.toDto(productRepository.save(productMapper.fromDto(product)));
-  }
-
   public ProductDTO getProduct(Long id){
 
     return productMapper.toDto(productRepository.findById(id).orElse(null));

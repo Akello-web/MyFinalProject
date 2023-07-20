@@ -61,7 +61,7 @@
                   footerContent += "<p>YOUR PRODUCT</p>"
               }else{
                   footerContent += "<button type='button' class='btn btn-secondary' data-bs-dismiss='modal'>Close</button>"
-                  footerContent += "<button type='button' class='btn btn-primary'>BUY</button>"
+                  footerContent += "<button type='button' class='btn btn-primary' data-bs-dismiss='modal'>OK</button>"
               }
               document.getElementById("modal-footer").innerHTML = footerContent;
 
@@ -157,6 +157,7 @@
       'name': productName.value,
       'description': productDescription.value,
       'price': productPrice.value,
+      'handled': true,
       "category": {
         "id": productCategory.value
       },
