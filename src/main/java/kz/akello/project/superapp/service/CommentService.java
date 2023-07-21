@@ -25,9 +25,9 @@ public class CommentService {
     return commentMapper.toDto(commentRepository.findById(id).orElse(null));
   }
 
-  public CommentDTO addComment(CommentDTO comment){
+  public CommentDTO addComment(CommentDTO comment) {
     Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-    String currentUserName = authentication.getName();
+    String currentUserName = (authentication != null && authentication.isAuthenticated()) ? authentication.getName() : "Anonymous";
     comment.setUserName(currentUserName);
     comment.setPostDate(new Timestamp(System.currentTimeMillis()));
     return commentMapper.toDto(commentRepository.save(commentMapper.fromDto(comment)));

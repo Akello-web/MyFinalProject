@@ -13,6 +13,7 @@ public interface CommentMapper {
   CommentDTO toDto(Comments comments);
 
   @Mapping(source = "news", target = "news")
+  @Mapping(source = "commentary", target = "commentary")
   Comments fromDto(CommentDTO commentDTO);
 
   List<CommentDTO> toCommentDtoList(List<Comments> commentsList);

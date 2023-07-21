@@ -1,5 +1,6 @@
 package kz.akello.project.superapp.mapper;
 
+import kz.akello.project.superapp.dto.CommentDTO;
 import kz.akello.project.superapp.dto.NewsDTO;
 import kz.akello.project.superapp.model.News;
 import org.mapstruct.Mapper;

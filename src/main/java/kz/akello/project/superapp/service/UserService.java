@@ -110,11 +110,11 @@ public class UserService implements UserDetailsService {
         return userRepository.save(currentUser);
     }
 
-    public User getCurrentSessionUser(){
+    public User getCurrentSessionUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if(!(authentication instanceof AnonymousAuthenticationToken)){
+        if (authentication != null && !(authentication instanceof AnonymousAuthenticationToken)) {
             User user = (User) authentication.getPrincipal();
-            if(user != null){
+            if (user != null) {
                 return user;
             }
         }
