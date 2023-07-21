@@ -1,193 +1,193 @@
 <script type="text/javascript">
-  loadProducts();
-  function loadProducts(){
-    const httpRequest = new XMLHttpRequest();
-    httpRequest.open("GET", "/products", true);
-    httpRequest.onreadystatechange = function (){
-      if(httpRequest.readyState == XMLHttpRequest.DONE && httpRequest.status == 200){
+    loadProducts();
+    function loadProducts(){
+        const httpRequest = new XMLHttpRequest();
+        httpRequest.open("GET", "/products", true);
+        httpRequest.onreadystatechange = function (){
+            if(httpRequest.readyState == XMLHttpRequest.DONE && httpRequest.status == 200){
 
-        let productList = JSON.parse(httpRequest.responseText);
+                let productList = JSON.parse(httpRequest.responseText);
 
-        let tableContent = "";
-        for (let i = 0; i < productList.length; i++){
-            if (productList[i].handled){
-                tableContent+="<tr>";
-                tableContent+="<td>"+productList[i].id+"</td>";
-                tableContent+="<td>"+productList[i].userProduct.fullName+"</td>";
-                tableContent+="<td>"+productList[i].name+"</td>";
-                tableContent+="<td>"+productList[i].price+"$</td>";
-                tableContent+="<td><button class='btn btn-sm btn-success' " +
-                    "onclick='openProductDetailsModel("+productList[i].id+")'>DETAILS</button</td>";
-                tableContent+="</tr>";
+                let tableContent = "";
+                for (let i = 0; i < productList.length; i++){
+                    if (productList[i].handled){
+                        tableContent+="<tr>";
+                        tableContent+="<td>"+productList[i].id+"</td>";
+                        tableContent+="<td>"+productList[i].userProduct.fullName+"</td>";
+                        tableContent+="<td>"+productList[i].name+"</td>";
+                        tableContent+="<td>"+productList[i].price+"$</td>";
+                        tableContent+="<td><button class='btn btn-sm btn-success' " +
+                            "onclick='openProductDetailsModel("+productList[i].id+")'>DETAILS</button</td>";
+                        tableContent+="</tr>";
+                    }
+                }
+                document.getElementById("productTableBody").innerHTML = tableContent;
             }
         }
-        document.getElementById("productTableBody").innerHTML = tableContent;
-      }
+        httpRequest.send();
     }
-    httpRequest.send();
-  }
 
-  function categoriesInput(){
-    const httpRequest = new XMLHttpRequest();
-    httpRequest.open("GET", "/categories", true);
-    httpRequest.onreadystatechange = function (){
-      if(httpRequest.readyState == XMLHttpRequest.DONE && httpRequest.status == 200){
+    function categoriesInput(){
+        const httpRequest = new XMLHttpRequest();
+        httpRequest.open("GET", "/categories", true);
+        httpRequest.onreadystatechange = function (){
+            if(httpRequest.readyState == XMLHttpRequest.DONE && httpRequest.status == 200){
 
-        let categoryList = JSON.parse(httpRequest.responseText);
+                let categoryList = JSON.parse(httpRequest.responseText);
 
-        let selectContent = "";
-        for (let i = 0; i < categoryList.length; i++){
-          selectContent+="<option value='"+categoryList[i].id+"'>"+categoryList[i].name+"</option>";
+                let selectContent = "";
+                for (let i = 0; i < categoryList.length; i++){
+                    selectContent+="<option value='"+categoryList[i].id+"'>"+categoryList[i].name+"</option>";
+                }
+                document.getElementById("productCategory").innerHTML = selectContent;
+                document.getElementById("categoryDetails").innerHTML = selectContent;
+            }
         }
-        document.getElementById("productCategory").innerHTML = selectContent;
-        document.getElementById("categoryDetails").innerHTML = selectContent;
-      }
-    }
-    httpRequest.send();
-  }
-
-
-  function emailsComparison(id){
-      const httpRequest = new XMLHttpRequest();
-      httpRequest.open("GET", "/products/"+id, true);
-      httpRequest.onreadystatechange = function (){
-          if(httpRequest.readyState == XMLHttpRequest.DONE && httpRequest.status == 200){
-              let result = JSON.parse(httpRequest.responseText);
-              let currentUserEmail = document.getElementById("currentUserEmail");
-
-              let footerContent = "";
-
-              if(currentUserEmail.value === result.userProduct.email){
-                  footerContent += "<p>YOUR PRODUCT</p>"
-              }else{
-                  footerContent += "<button type='button' class='btn btn-secondary' data-bs-dismiss='modal'>Close</button>"
-                  footerContent += "<button type='button' class='btn btn-primary' data-bs-dismiss='modal'>OK</button>"
-              }
-              document.getElementById("modal-footer").innerHTML = footerContent;
-
-          }
-      }
-      httpRequest.send();
-  }
-
-  function openProductDetailsModel(id){
-    categoriesInput();
-    emailsComparison(id);
-
-    detailsModal = new bootstrap.Modal(document.getElementById('detailsModal'));
-
-    const httpRequest = new XMLHttpRequest();
-    httpRequest.open("GET", "/products/"+id, true);
-    httpRequest.onreadystatechange = function (){
-      if(httpRequest.readyState == XMLHttpRequest.DONE && httpRequest.status == 200){
-        let result = JSON.parse(httpRequest.responseText);
-
-        productId.value = result.id;
-        userId.value = result.userProduct.id;
-        sellerNameDetails.value = result.userProduct.fullName;
-        categoryDetails.value = result.category.name;
-        productNameDetails.value = result.name;
-        descriptionDetails.value = result.description;
-        priceDetails.value = result.price;
-
-          detailsModal.show();
-      }
-    }
-    httpRequest.send();
-  }
-
-  function addProduct(){
-    const httpRequest = new XMLHttpRequest();
-    httpRequest.open("POST", "/products", true);
-    httpRequest.setRequestHeader("Content-Type", "application/json");
-
-    let productName = document.getElementById("productName")
-    let productDescription = document.getElementById("productDescription")
-    let productPrice = document.getElementById("productPrice")
-    let productCategory = document.getElementById("productCategory")
-
-    let alertElement = document.getElementById("reviewAlert")
-
-    httpRequest.onreadystatechange = function (){
-      if(httpRequest.readyState == XMLHttpRequest.DONE && httpRequest.status == 200){
-          productName.value = "";
-          productDescription.value = "";
-          productPrice.value = "";
-          loadProducts();
-          alertElement.classList.remove('d-none');
-      }
+        httpRequest.send();
     }
 
-    let body = {
-      'name': productName.value,
-      'description': productDescription.value,
-      'price': productPrice.value,
-      "category": {
-        "id": productCategory.value,
-        "name": "SOMETHING"
-      }
-    }
-    body = JSON.stringify(body);
-    httpRequest.send(body);
-  }
 
-  function updateProduct(){
-    const httpRequest = new XMLHttpRequest();
-    httpRequest.open("PUT", "/products", true);
-    httpRequest.setRequestHeader("Content-Type", "application/json");
+    function emailsComparison(id){
+        const httpRequest = new XMLHttpRequest();
+        httpRequest.open("GET", "/products/"+id, true);
+        httpRequest.onreadystatechange = function (){
+            if(httpRequest.readyState == XMLHttpRequest.DONE && httpRequest.status == 200){
+                let result = JSON.parse(httpRequest.responseText);
+                let currentUserEmail = document.getElementById("currentUserEmail");
 
-    let productId = document.getElementById("productId")
-    let userId = document.getElementById("userId")
-    let productName = document.getElementById("productNameDetails")
-    let productDescription = document.getElementById("descriptionDetails")
-    let productPrice = document.getElementById("priceDetails")
-    let productCategory = document.getElementById("categoryDetails")
+                let footerContent = "";
 
-    httpRequest.onreadystatechange = function (){
-      if(httpRequest.readyState == XMLHttpRequest.DONE && httpRequest.status == 200){
+                if(currentUserEmail.value === result.userProduct.email){
+                    footerContent += "<p>YOUR PRODUCT</p>"
+                }else{
+                    footerContent += "<button type='button' class='btn btn-secondary' data-bs-dismiss='modal'>Close</button>"
+                    footerContent += "<button type='button' class='btn btn-primary' data-bs-dismiss='modal'>OK</button>"
+                }
+                document.getElementById("modal-footer").innerHTML = footerContent;
 
-        loadProducts();
-      }
+            }
+        }
+        httpRequest.send();
     }
 
-    console.log(userId.value)
+    function openProductDetailsModel(id){
+        categoriesInput();
+        emailsComparison(id);
 
-    let body = {
-      'id': productId.value,
-      'name': productName.value,
-      'description': productDescription.value,
-      'price': productPrice.value,
-      'handled': true,
-      "category": {
-        "id": productCategory.value
-      },
-        "userProduct": {
-            "id": userId.value
+        detailsModal = new bootstrap.Modal(document.getElementById('detailsModal'));
+
+        const httpRequest = new XMLHttpRequest();
+        httpRequest.open("GET", "/products/"+id, true);
+        httpRequest.onreadystatechange = function (){
+            if(httpRequest.readyState == XMLHttpRequest.DONE && httpRequest.status == 200){
+                let result = JSON.parse(httpRequest.responseText);
+
+                productId.value = result.id;
+                userId.value = result.userProduct.id;
+                sellerNameDetails.value = result.userProduct.fullName;
+                categoryDetails.value = result.category.name;
+                productNameDetails.value = result.name;
+                descriptionDetails.value = result.description;
+                priceDetails.value = result.price;
+
+                detailsModal.show();
+            }
+        }
+        httpRequest.send();
+    }
+
+    function addProduct(){
+        const httpRequest = new XMLHttpRequest();
+        httpRequest.open("POST", "/products", true);
+        httpRequest.setRequestHeader("Content-Type", "application/json");
+
+        let productName = document.getElementById("productName")
+        let productDescription = document.getElementById("productDescription")
+        let productPrice = document.getElementById("productPrice")
+        let productCategory = document.getElementById("productCategory")
+
+        let alertElement = document.getElementById("reviewAlert")
+
+        httpRequest.onreadystatechange = function (){
+            if(httpRequest.readyState == XMLHttpRequest.DONE && httpRequest.status == 200){
+                productName.value = "";
+                productDescription.value = "";
+                productPrice.value = "";
+                loadProducts();
+                alertElement.classList.remove('d-none');
+            }
+        }
+
+        let body = {
+            'name': productName.value,
+            'description': productDescription.value,
+            'price': productPrice.value,
+            "category": {
+                "id": productCategory.value,
+                "name": "SOMETHING"
+            }
+        }
+        body = JSON.stringify(body);
+        httpRequest.send(body);
+    }
+
+    function updateProduct(){
+        const httpRequest = new XMLHttpRequest();
+        httpRequest.open("PUT", "/products", true);
+        httpRequest.setRequestHeader("Content-Type", "application/json");
+
+        let productId = document.getElementById("productId")
+        let userId = document.getElementById("userId")
+        let productName = document.getElementById("productNameDetails")
+        let productDescription = document.getElementById("descriptionDetails")
+        let productPrice = document.getElementById("priceDetails")
+        let productCategory = document.getElementById("categoryDetails")
+
+        httpRequest.onreadystatechange = function (){
+            if(httpRequest.readyState == XMLHttpRequest.DONE && httpRequest.status == 200){
+
+                loadProducts();
+            }
+        }
+
+        console.log(userId.value)
+
+        let body = {
+            'id': productId.value,
+            'name': productName.value,
+            'description': productDescription.value,
+            'price': productPrice.value,
+            'handled': true,
+            "category": {
+                "id": productCategory.value
+            },
+            "userProduct": {
+                "id": userId.value
+            }
+        }
+        body = JSON.stringify(body);
+        httpRequest.send(body);
+    }
+
+    function deleteProduct(){
+
+        let approve = confirm('YOU ARE DELETING THIS PRODUCT')
+
+        if(approve){
+            let productId = document.getElementById("productId")
+
+            const httpRequest = new XMLHttpRequest();
+            httpRequest.open("DELETE", "/products/" + productId.value, true);
+
+
+            httpRequest.onreadystatechange = function (){
+                if(httpRequest.readyState == XMLHttpRequest.DONE && httpRequest.status == 200){
+                    detailsModal.hide();
+                    loadProducts();
+                }
+            }
+            httpRequest.send();
         }
     }
-    body = JSON.stringify(body);
-    httpRequest.send(body);
-  }
-
-  function deleteProduct(){
-
-    let approve = confirm('YOU ARE DELETING THIS PRODUCT')
-
-    if(approve){
-      let productId = document.getElementById("productId")
-
-      const httpRequest = new XMLHttpRequest();
-      httpRequest.open("DELETE", "/products/" + productId.value, true);
-
-
-      httpRequest.onreadystatechange = function (){
-        if(httpRequest.readyState == XMLHttpRequest.DONE && httpRequest.status == 200){
-          detailsModal.hide();
-          loadProducts();
-        }
-      }
-      httpRequest.send();
-    }
-  }
 
 </script>

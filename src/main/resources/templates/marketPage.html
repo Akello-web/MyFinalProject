@@ -18,75 +18,75 @@
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
       </div>
 
-        <div class="d-flex justify-content-between">
-          <button type="button" class="btn btn-sm btn-outline-secondary"
-                  data-bs-toggle="modal" data-bs-target="#addProductModal"
-                  sec:authorize="hasAnyRole('ROLE_SELLER')"
-                  onclick="categoriesInput()">
-            +ADD PRODUCT
-          </button>
-          <a sec:authorize="hasAnyRole('ROLE_ADMIN')" href="/categories-panel" class="btn btn-sm btn-outline-primary">Categories Panel</a>
-        </div>
+      <div class="d-flex justify-content-between">
+        <button type="button" class="btn btn-sm btn-outline-secondary"
+                data-bs-toggle="modal" data-bs-target="#addProductModal"
+                sec:authorize="hasAnyRole('ROLE_SELLER')"
+                onclick="categoriesInput()">
+          +ADD PRODUCT
+        </button>
+        <a sec:authorize="hasAnyRole('ROLE_ADMIN')" href="/categories-panel" class="btn btn-sm btn-outline-primary">Categories Panel</a>
+      </div>
 
-        <!-- Modal -->
-        <div class="modal fade" id="addProductModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-          <div class="modal-dialog">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h1 class="modal-title fs-5" id="ModalLabel">ADD NEW PRODUCT</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-              </div>
-              <div class="modal-body" sec:authorize="isAuthenticated()">
-                <input type="hidden" id="currentUser">
-                <div class="row mt-2">
-                  <div class="col-12">
-                    <label>CATEGORY:</label>
-                  </div>
-                </div>
-                <div class="row mt-2">
-                  <div class="col-12">
-                    <select class="form-control" id="productCategory">
-                    </select>
-                  </div>
-                </div>
-                <div class="row mt-2">
-                  <div class="col-12">
-                    <label>NAME:</label>
-                  </div>
-                </div>
-                <div class="row mt-2">
-                  <div class="col-12">
-                    <input class="form-control" type="text" id="productName" required>
-                  </div>
-                </div>
-                <div class="row mt-2">
-                  <div class="col-12">
-                    <label>DESCRIPTION:</label>
-                  </div>
-                </div>
-                <div class="row mt-2">
-                  <div class="col-12">
-                    <textarea class="form-control" id="productDescription" required></textarea>
-                  </div>
-                </div>
-                <div class="row mt-2">
-                  <div class="col-12">
-                    <label>PRICE:</label>
-                  </div>
-                </div>
-                <div class="row mt-2">
-                  <div class="col-12">
-                    <input class="form-control" type="text" id="productPrice" required>
-                  </div>
+      <!-- Modal -->
+      <div class="modal fade" id="addProductModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="ModalLabel">ADD NEW PRODUCT</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" sec:authorize="isAuthenticated()">
+              <input type="hidden" id="currentUser">
+              <div class="row mt-2">
+                <div class="col-12">
+                  <label>CATEGORY:</label>
                 </div>
               </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">CANCEL</button>
-                <button type="button" class="btn btn-success" data-bs-dismiss="modal" onclick="addProduct()">ADD</button>
+              <div class="row mt-2">
+                <div class="col-12">
+                  <select class="form-control" id="productCategory">
+                  </select>
+                </div>
               </div>
+              <div class="row mt-2">
+                <div class="col-12">
+                  <label>NAME:</label>
+                </div>
+              </div>
+              <div class="row mt-2">
+                <div class="col-12">
+                  <input class="form-control" type="text" id="productName" required>
+                </div>
+              </div>
+              <div class="row mt-2">
+                <div class="col-12">
+                  <label>DESCRIPTION:</label>
+                </div>
+              </div>
+              <div class="row mt-2">
+                <div class="col-12">
+                  <textarea class="form-control" id="productDescription" required></textarea>
+                </div>
+              </div>
+              <div class="row mt-2">
+                <div class="col-12">
+                  <label>PRICE:</label>
+                </div>
+              </div>
+              <div class="row mt-2">
+                <div class="col-12">
+                  <input class="form-control" type="text" id="productPrice" required>
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">CANCEL</button>
+              <button type="button" class="btn btn-success" data-bs-dismiss="modal" onclick="addProduct()">ADD</button>
             </div>
           </div>
         </div>
+      </div>
 
       <table class="table table-striped">
         <thead>

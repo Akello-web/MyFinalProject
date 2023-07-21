@@ -72,33 +72,33 @@
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                                <input type="hidden" id="updateNewId" th:value="${thenew.id}">
-                                <div class="row mt-2">
-                                    <div class="col-12">
-                                        <label> TITLE:</label>
-                                    </div>
+                            <input type="hidden" id="updateNewId" th:value="${thenew.id}">
+                            <div class="row mt-2">
+                                <div class="col-12">
+                                    <label> TITLE:</label>
                                 </div>
-                                <div class="row mt-2">
-                                    <div class="col-12">
-                                        <input class="form-control" type="text"
-                                               id="title" th:value="${thenew.title}">
-                                    </div>
+                            </div>
+                            <div class="row mt-2">
+                                <div class="col-12">
+                                    <input class="form-control" type="text"
+                                           id="title" th:value="${thenew.title}">
                                 </div>
-                                <div class="row mt-4">
-                                    <div class="col-12">
-                                        <label> DESCRIPTION:</label>
-                                    </div>
+                            </div>
+                            <div class="row mt-4">
+                                <div class="col-12">
+                                    <label> DESCRIPTION:</label>
                                 </div>
-                                <div class="row mt-2">
-                                    <div class="col-12">
+                            </div>
+                            <div class="row mt-2">
+                                <div class="col-12">
                                         <textarea class="form-control"
                                                   id="description" th:text="${thenew.description}"></textarea>
-                                    </div>
                                 </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                                    <button class="btn btn-primary" onclick="updateNews()">UPDATE</button>
-                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                <button class="btn btn-primary" onclick="updateNews()">UPDATE</button>
+                            </div>
 
                         </div>
 
@@ -110,31 +110,31 @@
             <div class="modal fade" id="delete-news-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
-                            <input type="hidden" id="deleteNewId" th:value="${thenew.id}">
-                            <div class="modal-header">
-                                <h1 class="modal-title fs-5" id="exampleModalLabelDelete">Confirm delete</h1>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                ARE YOU SURE?
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                <button class="btn btn-danger ms-2" onclick="deleteNews()">DELETE</button>
-                            </div>
+                        <input type="hidden" id="deleteNewId" th:value="${thenew.id}">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="exampleModalLabelDelete">Confirm delete</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            ARE YOU SURE?
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button class="btn btn-danger ms-2" onclick="deleteNews()">DELETE</button>
+                        </div>
                     </div>
                 </div>
             </div>
 
             <div class="row mt-4" sec:authorize="isAuthenticated()">
                 <div class="col-12 ">
-                        <input type="hidden" name="newsId">
-                        <textarea class="form-control" id="comment" placeholder="your comment"></textarea>
-                        <div class="row mt-1">
-                            <div class="col-3 ">
-                                <button class="btn btn-success btn-sm" onclick="addComment()">ADD</button>
-                            </div>
+                    <input type="hidden" name="newsId">
+                    <textarea class="form-control" id="comment" placeholder="your comment"></textarea>
+                    <div class="row mt-1">
+                        <div class="col-3 ">
+                            <button class="btn btn-success btn-sm" onclick="addComment()">ADD</button>
                         </div>
+                    </div>
                 </div>
             </div>
 
@@ -176,12 +176,6 @@
 
             let newsId = document.getElementById("deleteNewId")
 
-            for (let i = 0; i < commentList.length; i++) {
-                if(commentList[i].news.id == newsId.value){
-                    deleteCommentById(commentList[i].id)
-                }
-            }
-
             const httpRequest = new XMLHttpRequest();
             httpRequest.open("DELETE", "/news/" + newsId.value, true);
 
@@ -206,34 +200,34 @@
                     let innerContent = "";
                     for (let i = 0; i < commentList.length; i++) {
                         if(commentList[i].news.id == newsId.value){
-                        var postDate = new Date(commentList[i].postDate);
-                        var formattedPostDate = postDate.toLocaleString("en-US", {
-                            year: "numeric",
-                            month: "2-digit",
-                            day: "2-digit",
-                            hour: "2-digit",
-                            minute: "2-digit",
-                            second: "2-digit",
-                        });
-                        innerContent += "<div class='list-group mt-2'>"
-                        innerContent += "<a href='#' class='list-group-item list-group-item-action flex-column align-items-start' >"
-                        innerContent += "<div class='d-flex w-100 justify-content-between'>"
-                        innerContent += "<input type='hidden' id='commentId' value='"+commentList[i].id+"'>"
-                        innerContent += "<h6 class='mb-1'>"+commentList[i].userName+"</h6>"
-                        innerContent += "<small class='text-muted' >"+formattedPostDate+"</small></div>"
-                        innerContent += "<div class='d-flex w-100 justify-content-between'>"
-                        innerContent += "<p class='mb-1 text-decoration-underline'>"+commentList[i].commentary+"</p>"
+                            var postDate = new Date(commentList[i].postDate);
+                            var formattedPostDate = postDate.toLocaleString("en-US", {
+                                year: "numeric",
+                                month: "2-digit",
+                                day: "2-digit",
+                                hour: "2-digit",
+                                minute: "2-digit",
+                                second: "2-digit",
+                            });
+                            innerContent += "<div class='list-group mt-2'>"
+                            innerContent += "<a href='#' class='list-group-item list-group-item-action flex-column align-items-start' >"
+                            innerContent += "<div class='d-flex w-100 justify-content-between'>"
+                            innerContent += "<input type='hidden' id='commentId' value='"+commentList[i].id+"'>"
+                            innerContent += "<h6 class='mb-1'>"+commentList[i].userName+"</h6>"
+                            innerContent += "<small class='text-muted' >"+formattedPostDate+"</small></div>"
+                            innerContent += "<div class='d-flex w-100 justify-content-between'>"
+                            innerContent += "<p class='mb-1 text-decoration-underline'>"+commentList[i].commentary+"</p>"
 
                             if(commentList[i].userName == currentUser.value){
                                 innerContent += "<button class='btn btn-outline-danger' id='deleteButtonComment' data-bs-toggle='modal' " +
                                     "onclick='deleteComment()'>delete</button>"
                             }
-                        innerContent += "</div></a></div>"
+                            innerContent += "</div></a></div>"
                             document.getElementById("deleteButtonComment");
-                    }
-                    document.getElementById("commentSection").innerHTML = innerContent;
+                        }
+                        document.getElementById("commentSection").innerHTML = innerContent;
 
-                }}
+                    }}
             }
             httpRequest.send();
         }
@@ -282,19 +276,6 @@
                 }
                 httpRequest.send();
             }
-        }
-
-        function deleteCommentById(id){
-
-                const httpRequest = new XMLHttpRequest();
-                httpRequest.open("DELETE", "/comments/" + id, true);
-
-                httpRequest.onreadystatechange = function (){
-                    if(httpRequest.readyState == XMLHttpRequest.DONE && httpRequest.status == 200){
-                        getComments()
-                    }
-                }
-                httpRequest.send();
         }
     </script>
 

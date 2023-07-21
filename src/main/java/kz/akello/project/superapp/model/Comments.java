@@ -21,6 +21,6 @@ public class Comments extends BaseModel{
   @Column(name = "userName")
   private String userName;
 
-  @ManyToOne
+  @ManyToOne(fetch = FetchType.LAZY)
   private News news;
 }

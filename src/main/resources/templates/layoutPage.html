@@ -1,42 +1,42 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
-  <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-    <link rel="shortcut icon" href="#">
-    <link rel="stylesheet" type="text/css" th:href="@{'/css/bootstrap.min.css'}">
-    <style>
-      .bg-image {
-        background-image:
-                url('https://img.freepik.com/premium-vector/sun-clouds-weather-icon-vector-illustration-flat-design_570092-586.jpg');
-        background-size: contain;
-        background-position: center;
-      }
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <link rel="shortcut icon" href="#">
+  <link rel="stylesheet" type="text/css" th:href="@{'/css/bootstrap.min.css'}">
+  <style>
+    .bg-image {
+      background-image:
+              url('https://img.freepik.com/premium-vector/sun-clouds-weather-icon-vector-illustration-flat-design_570092-586.jpg');
+      background-size: contain;
+      background-position: center;
+    }
 
-      .bg-currency-image{
-        background-image:
-                url('https://ih1.redbubble.net/image.782302241.6820/st,small,507x507-pad,600x600,f8f8f8.u9.jpg');
-        background-size: cover;
-        background-position: center;
-      }
+    .bg-currency-image{
+      background-image:
+              url('https://ih1.redbubble.net/image.782302241.6820/st,small,507x507-pad,600x600,f8f8f8.u9.jpg');
+      background-size: cover;
+      background-position: center;
+    }
 
-      .title-link:hover{
-        text-decoration: underline;
-      }
-    </style>
-  </head>
+    .title-link:hover{
+      text-decoration: underline;
+    }
+  </style>
+</head>
 <body>
 <div th:insert="navbar.html"></div>
-  <div class="container mt-3" style="min-height: 700px">
-    <div class="row">
-      <div class="col-12">
-        <div layout:fragment="content">
-        </div>
+<div class="container mt-3" style="min-height: 700px">
+  <div class="row">
+    <div class="col-12">
+      <div layout:fragment="content">
       </div>
     </div>
   </div>
-  <div th:insert="footer.html"></div>
-  </body>
-  <script type="text/javascript" th:src="@{'/js/bootstrap.bundle.js'}"> </script>
+</div>
+<div th:insert="footer.html"></div>
+</body>
+<script type="text/javascript" th:src="@{'/js/bootstrap.bundle.js'}"> </script>
 </html>

@@ -89,49 +89,49 @@ public class HomeController {
 
     @PostMapping(value = "/to-sign-up")
     public String toSignUp(
-                           @RequestParam(name = "user_full_name") String fullName,
-                           @RequestParam(name = "user_age") int userAge,
-                           @RequestParam(name = "user_email") String email,
-                           @RequestParam(name = "user_password") String password,
-                           @RequestParam(name = "user_repeat_password") String rePassword,
-                           @RequestParam(name = "user_money") Double money,
-                           @RequestParam(name = "sellerChecked", required = false) String checkBox){
+            @RequestParam(name = "user_full_name") String fullName,
+            @RequestParam(name = "user_age") int userAge,
+            @RequestParam(name = "user_email") String email,
+            @RequestParam(name = "user_password") String password,
+            @RequestParam(name = "user_repeat_password") String rePassword,
+            @RequestParam(name = "user_money") Double money,
+            @RequestParam(name = "sellerChecked", required = false) String checkBox){
 
-            if(password.equals(rePassword)){
-                User user = new User();
-                user.setAge(userAge);
-                user.setFullName(fullName);
-                user.setEmail(email);
-                user.setMoney(money);
-                user.setPassword(password);
-                if(checkBox!=null){
-                    if(userAge >= 18){
-                        user.setMoney(150);
-                        User newUser = userService.addSeller(user);
-                        if(newUser!=null){
-                            return "redirect:/sign-up-page?successSeller";
-                        }else {
-                            return "redirect:/sign-up-page?emailError";
-                        }
+        if(password.equals(rePassword)){
+            User user = new User();
+            user.setAge(userAge);
+            user.setFullName(fullName);
+            user.setEmail(email);
+            user.setMoney(money);
+            user.setPassword(password);
+            if(checkBox!=null){
+                if(userAge >= 18){
+                    user.setMoney(150);
+                    User newUser = userService.addSeller(user);
+                    if(newUser!=null){
+                        return "redirect:/sign-up-page?successSeller";
                     }else {
-                        return "redirect:/sign-up-page?sellerAgeError";
+                        return "redirect:/sign-up-page?emailError";
                     }
-
                 }else {
-                    if(userAge>=16){
-                        User newUser = userService.addUser(user);
-                        if(newUser!=null){
-                            return "redirect:/sign-up-page?successUser";
-                        }else {
-                            return "redirect:/sign-up-page?emailError";
-                        }
-                    }else {
-                        return "redirect:/sign-up-page?userAgeError";
-                    }
+                    return "redirect:/sign-up-page?sellerAgeError";
                 }
+
             }else {
-                return "redirect:/sign-up-page?passwordMismatch";
+                if(userAge>=16){
+                    User newUser = userService.addUser(user);
+                    if(newUser!=null){
+                        return "redirect:/sign-up-page?successUser";
+                    }else {
+                        return "redirect:/sign-up-page?emailError";
+                    }
+                }else {
+                    return "redirect:/sign-up-page?userAgeError";
+                }
             }
+        }else {
+            return "redirect:/sign-up-page?passwordMismatch";
+        }
     }
 
     @PostMapping(value = "/to-update-password")

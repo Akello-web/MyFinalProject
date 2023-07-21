@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "t_news")
@@ -23,6 +25,9 @@ public class News extends BaseModel{
   @Temporal(TemporalType.TIMESTAMP)
   @Column(name = "news_postdate")
   private Timestamp postDate;
+
+  @OneToMany(mappedBy = "news", cascade = CascadeType.ALL, orphanRemoval = true)
+  private List<Comments> comments = new ArrayList<>();
 
   public Timestamp getPostDate() {
     return postDate;
