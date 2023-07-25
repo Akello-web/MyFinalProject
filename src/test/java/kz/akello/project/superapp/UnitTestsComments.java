@@ -66,13 +66,13 @@ class UnitTestsComments {
 		CommentDTO commentDTO = commentService.addComment(commentMapper.toDto(comments));
 
 		Assertions.assertNotNull(commentDTO);
-//		Assertions.assertNotNull(comments.getId());
-//		Assertions.assertEquals(comments.getUserName(), commentDTO.getUserName());
-//		Assertions.assertEquals(news, comments.getNews());
-//		Assertions.assertEquals(comments.getCommentary(), commentDTO.getCommentary());
-//		Assertions.assertNotNull(commentDTO.getPostDate());
-//		Assertions.assertTrue(commentDTO.getPostDate().toLocalDateTime().isAfter(LocalDateTime.now().minusMinutes(1)));
-//		Assertions.assertTrue(commentDTO.getPostDate().toLocalDateTime().isBefore(LocalDateTime.now().plusMinutes(1)));
+		Assertions.assertNotNull(comments.getId());
+		Assertions.assertEquals(comments.getUserName(), commentDTO.getUserName());
+		Assertions.assertEquals(news, comments.getNews());
+		Assertions.assertEquals(comments.getCommentary(), commentDTO.getCommentary());
+		Assertions.assertNotNull(commentDTO.getPostDate());
+		Assertions.assertTrue(commentDTO.getPostDate().toLocalDateTime().isAfter(LocalDateTime.now().minusMinutes(1)));
+		Assertions.assertTrue(commentDTO.getPostDate().toLocalDateTime().isBefore(LocalDateTime.now().plusMinutes(1)));
 	}
 
 }

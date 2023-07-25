@@ -1,57 +1,56 @@
-CREATE TABLE t_users(
-
-    id bigint auto_increment,
-    user_age int,
-    email varchar(255),
-    full_name varchar(255),
-    password varchar(255),
-    user_money double,
-    primary key (id)
-);
-CREATE TABLE t_permissions(
-  id bigint auto_increment,
-  user_role VARCHAR(255),
-  primary key (id)
+CREATE TABLE t_users (
+                         id BIGSERIAL PRIMARY KEY,
+                         user_age INTEGER,
+                         email VARCHAR(255),
+                         full_name VARCHAR(255),
+                         password VARCHAR(255),
+                         user_money DOUBLE PRECISION
 );
 
-CREATE TABLE t_users_permission_list(
-    user_id bigint,
-    permission_list_id bigint
+CREATE TABLE t_permissions (
+                               id BIGSERIAL PRIMARY KEY,
+                               user_role VARCHAR(255)
 );
 
-CREATE TABLE t_products(
-   id bigint auto_increment,
-   product_description TEXT,
-   product_name varchar(255),
-   product_price double,
-   product_handled bit,
-   category_id bigint,
-   user_product_id bigint,
-   primary key (id)
+
+CREATE TABLE t_users_permission_list (
+                                         user_id BIGINT,
+                                         permission_list_id BIGINT
 );
 
-CREATE TABLE t_news(
-   id bigint auto_increment,
-   news_description TEXT,
-   news_author varchar(255),
-   news_postdate datetime(6),
-   news_title varchar(255),
-   primary key (id)
+
+CREATE TABLE t_products (
+                            id BIGSERIAL PRIMARY KEY,
+                            product_description TEXT,
+                            product_name VARCHAR(255),
+                            product_price DOUBLE PRECISION,
+                            product_handled BOOLEAN,
+                            category_id BIGINT,
+                            user_product_id BIGINT
 );
+
+
+CREATE TABLE t_news (
+                        id BIGSERIAL PRIMARY KEY,
+                        news_description TEXT,
+                        news_author VARCHAR(255),
+                        news_postdate TIMESTAMP(6),
+                        news_title VARCHAR(255)
+);
+
 
 CREATE TABLE t_comments (
-    id bigint auto_increment,
-    commentary varchar(255),
-    comment_date datetime(6),
-    user_name varchar(255),
-    news_id bigint,
-    primary key (id)
+                            id BIGSERIAL PRIMARY KEY,
+                            commentary VARCHAR(255),
+                            comment_date TIMESTAMP(6),
+                            user_name VARCHAR(255),
+                            news_id BIGINT
 );
 
-CREATE TABLE t_categories(
-     id bigint auto_increment,
-     category_name varchar(255),
-     primary key (id)
+
+CREATE TABLE t_categories (
+                              id BIGSERIAL PRIMARY KEY,
+                              category_name VARCHAR(255)
 );
 
 ALTER TABLE t_users_permission_list

@@ -56,7 +56,7 @@ class SuperappApplicationTests {
 		Assertions.assertFalse(product.isHandled());
 		Assertions.assertEquals(category, product.getCategory());
 		Assertions.assertEquals(user, product.getUserProduct());
-	}//CHECKED SUKA
+	}
 
 	@Test
 	void insertProductsIntoDB(){
