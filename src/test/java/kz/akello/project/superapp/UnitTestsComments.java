@@ -1,12 +1,9 @@
 package kz.akello.project.superapp;
 
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.PersistenceContext;
 import kz.akello.project.superapp.dto.CommentDTO;
 import kz.akello.project.superapp.mapper.CommentMapper;
 import kz.akello.project.superapp.model.Comments;
 import kz.akello.project.superapp.model.News;
-import kz.akello.project.superapp.repository.CommentRepository;
 import kz.akello.project.superapp.repository.NewsRepository;
 import kz.akello.project.superapp.service.CommentService;
 import org.junit.jupiter.api.Assertions;

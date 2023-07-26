@@ -1,6 +1,5 @@
 package kz.akello.project.superapp.dto;
 
-import kz.akello.project.superapp.model.Permission;
 import lombok.Getter;
 import lombok.Setter;
 
